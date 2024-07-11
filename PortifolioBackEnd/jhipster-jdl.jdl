@@ -1,0 +1,67 @@
+application {
+  config {
+    baseName portfolioApp
+    applicationType monolith
+    packageName com.mycompany.myapp
+    authenticationType jwt
+    cacheProvider ehcache
+    enableHibernateCache true
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+    buildTool maven
+    clientFramework react
+    clientPackageManager npm
+    testFrameworks [cypress]
+  }
+
+  entities Project, Post, Photo, Video, AbukarUser
+}
+
+entity Project {
+  title String required
+  description String required
+  date Instant required
+  url String
+}
+
+entity Post {
+  title String required
+  content TextBlob required
+  date Instant required
+}
+
+entity Photo {
+  title String required
+  url String required
+  date Instant required
+}
+
+entity Video {
+  title String required
+  url String required
+  date Instant required
+}
+
+entity AbukarUser {
+  login String required minlength(1)
+  passwordHash String required
+  email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+  activated Boolean
+  langKey String
+  imageUrl String
+  activationKey String
+  resetKey String
+  resetDate Instant
+}
+
+relationship OneToMany {
+  AbukarUser{project} to Project{abukarUser(login)}
+  AbukarUser{post} to Post{abukarUser(login)}
+  AbukarUser{photo} to Photo{abukarUser(login)}
+  AbukarUser{video} to Video{abukarUser(login)}
+}
+
+service Project, Post, Photo, Video, AbukarUser with serviceClass
+
+paginate Project, Post, Photo, Video with pagination
