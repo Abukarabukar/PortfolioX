@@ -1,4 +1,3 @@
-// src/page/TicTacToe.tsx
 import React, { useState, useEffect } from 'react';
 import './TicTacToe.scss';
 
@@ -114,20 +113,24 @@ const TicTacToe: React.FC = () => {
   return (
     <div className="game">
       <div className="status">{status}</div>
-      <div className="pieces">
-        {isXNext && (
-          <div className="piece" draggable onDragStart={() => handleDragStart('X')}>
-            X
-          </div>
-        )}
-        {!isXNext && (
-          <div className="piece" draggable onDragStart={() => handleDragStart('O')}>
-            O
-          </div>
-        )}
-      </div>
-      <div className="board">
-        {board.map((_, index) => renderSquare(index))}
+      <div className="container">
+        <div className="pieces left">
+          {[...Array(4)].map((_, idx) => (
+            <div key={idx} className="piece" draggable onDragStart={() => handleDragStart('O')}>
+              O
+            </div>
+          ))}
+        </div>
+        <div className="board">
+          {board.map((_, index) => renderSquare(index))}
+        </div>
+        <div className="pieces right">
+          {[...Array(5)].map((_, idx) => (
+            <div key={idx} className="piece" draggable onDragStart={() => handleDragStart('X')}>
+              X
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

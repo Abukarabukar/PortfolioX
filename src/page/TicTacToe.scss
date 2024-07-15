@@ -1,4 +1,3 @@
-// src/page/TicTacToe.scss
 .game {
   display: flex;
   flex-direction: column;
@@ -11,10 +10,17 @@
   font-weight: bold;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   gap: 5px;
+  margin: 0 20px;
 }
 
 .square {
@@ -35,8 +41,8 @@
 
 .pieces {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .piece {
@@ -58,4 +64,12 @@
 
 .square.dragover {
   background-color: #f0f0f0;
+}
+
+.left {
+  margin-right: 20px;
+}
+
+.right {
+  margin-left: 20px;
 }
