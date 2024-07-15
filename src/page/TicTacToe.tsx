@@ -116,7 +116,7 @@ const TicTacToe: React.FC = () => {
       <div className="container">
         <div className="pieces left">
           {[...Array(4)].map((_, idx) => (
-            <div key={idx} className="piece" draggable onDragStart={() => handleDragStart('O')}>
+            <div key={idx} className="piece">
               O
             </div>
           ))}
