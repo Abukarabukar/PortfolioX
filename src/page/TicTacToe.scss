@@ -1,0 +1,35 @@
+// src/page/TicTacToe.scss
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 5px;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 2px solid #000;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square:focus {
+  outline: none;
+}
