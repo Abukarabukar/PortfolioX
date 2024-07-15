@@ -5,6 +5,7 @@ import './TicTacToe.scss';
 const TicTacToe: React.FC = () => {
   const [board, setBoard] = useState<Array<string | null>>(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
+  const [draggingPiece, setDraggingPiece] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isXNext) {
@@ -15,23 +16,14 @@ const TicTacToe: React.FC = () => {
     }
   }, [isXNext]);
 
-  useEffect(() => {
-    const winner = calculateWinner(board);
-    if (winner || board.every(cell => cell !== null)) {
-      const timer = setTimeout(() => {
-        resetGame();
-      }, 2000); // Delay to show the result before resetting
-      return () => clearTimeout(timer);
-    }
-  }, [board]);
-
-  const handleClick = (index: number) => {
-    if (board[index] || calculateWinner(board) || !isXNext) return;
+  const handleDrop = (index: number) => {
+    if (board[index] || calculateWinner(board) || !draggingPiece) return;
 
     const newBoard = board.slice();
-    newBoard[index] = 'X';
+    newBoard[index] = draggingPiece;
     setBoard(newBoard);
-    setIsXNext(false);
+    setIsXNext(draggingPiece === 'X' ? false : true);
+    setDraggingPiece(null);
   };
 
   const makeComputerMove = () => {
@@ -103,22 +95,37 @@ const TicTacToe: React.FC = () => {
   };
 
   const renderSquare = (index: number) => (
-    <button className="square" onClick={() => handleClick(index)}>
+    <div
+      className="square"
+      onDrop={() => handleDrop(index)}
+      onDragOver={(e) => e.preventDefault()}
+    >
       {board[index]}
-    </button>
+    </div>
   );
 
-  const resetGame = () => {
-    setBoard(Array(9).fill(null));
-    setIsXNext(true);
+  const handleDragStart = (piece: string) => {
+    setDraggingPiece(piece);
   };
 
   const winner = calculateWinner(board);
-  const status = winner ? `Winner: ${winner}` : board.every(cell => cell !== null) ? "It's a draw!" : `Next player: ${isXNext ? 'X' : 'O'}`;
+  const status = winner ? `Winner: ${winner}` : `Next player: ${isXNext ? 'X' : 'O'}`;
 
   return (
     <div className="game">
       <div className="status">{status}</div>
+      <div className="pieces">
+        {isXNext && (
+          <div className="piece" draggable onDragStart={() => handleDragStart('X')}>
+            X
+          </div>
+        )}
+        {!isXNext && (
+          <div className="piece" draggable onDragStart={() => handleDragStart('O')}>
+            O
+          </div>
+        )}
+      </div>
       <div className="board">
         {board.map((_, index) => renderSquare(index))}
       </div>
