@@ -4,15 +4,21 @@ import xImage from '../assets/x.png';
 import oImage from '../assets/o.png';
 import { motion } from 'framer-motion';
 import { useFollowPointer } from '../hooks/use-follow-pointer'; // Corrected path
+import { useClickPosition } from '../hooks/useClickPosition'; // New hook
 
 const TicTacToe: React.FC = () => {
   const [squares, setSquares] = useState<Array<string | null>>(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
+  const [selectedPiece, setSelectedPiece] = useState<number | null>(null); // Track selected piece
   const pieceRefs = useRef<(HTMLImageElement | null)[]>([]); // Separate refs for pieces
 
   // Apply the follow pointer effect
   const { x, y } = useFollowPointer();
 
+  // Get click position
+  const { x: clickX, y: clickY, clicked } = useClickPosition();
+
+  // Handle moving the piece to the clicked position
   const handleClick = (index: number) => {
     if (squares[index] || calculateWinner(squares)) return;
 
@@ -20,6 +26,10 @@ const TicTacToe: React.FC = () => {
     newSquares[index] = isXNext ? 'X' : 'O';
     setSquares(newSquares);
     setIsXNext(!isXNext);
+  };
+
+  const handlePieceClick = (index: number) => {
+    setSelectedPiece(index);
   };
 
   const renderSquare = (index: number) => {
@@ -58,6 +68,8 @@ const TicTacToe: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         ref={el => (pieceRefs.current[index] = el)} // Assign ref to piece
+        style={clicked && index === selectedPiece ? { left: clickX, top: clickY, position: 'absolute', transform: 'translate(-50%, -50%)' } : undefined} // Move piece to clicked position
+        onClick={() => handlePieceClick(index)} // Handle piece click
       />
     );
   };
