@@ -31,7 +31,7 @@ const Apps = () => {
       <motion.div
         className="animated-box"
         animate={{ x: clickPosition.x -50 , y: clickPosition.y -50 }} // Adjust to center the box
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        transition={{ duration: 10, ease: 'easeInOut' }}
       >
         <img src={xImage} alt="Animated" />
       </motion.div>
