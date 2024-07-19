@@ -10,6 +10,21 @@ const TicTacToe: React.FC = () => {
   const [isXNext, setIsXNext] = useState(true);
   const { x: pointerX, y: pointerY } = useFollowPointer(); // Use the hook to get pointer position
 
+  // Define the type for piece keys
+  type PieceKey = 'x-1' | 'x-2' | 'x-3' | 'x-4' | 'x-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
+
+  const [piecePositions, setPiecePositions] = useState<Record<PieceKey, { x: number, y: number }>>({
+    'x-1': { x: 100, y: 90 },
+    'x-2': { x: 100, y: 130 },
+    'x-3': { x: 100, y: 180 },
+    'x-4': { x: 100, y: 240 },
+    'x-5': { x: 100, y: 280 },
+    'o-1': { x: 100, y: 90 },
+    'o-2': { x: 100, y: 130 },
+    'o-3': { x: 100, y: 180 },
+    'o-4': { x: 100, y: 240 },
+  });
+
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
@@ -18,8 +33,15 @@ const TicTacToe: React.FC = () => {
     setIsXNext(!isXNext);
   };
 
-  const handlePieceClick = (piece: string) => {
-    console.log(`${piece} clicked`);
+  const handlePieceClick = (piece: PieceKey, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const containerRect = event.currentTarget.getBoundingClientRect();
+    const adjustedX = event.clientX - containerRect.left; // Adjusting for the left offset
+    const adjustedY = event.clientY - containerRect.top; // Adjusting for the top offset
+    setPiecePositions({
+      ...piecePositions,
+      [piece]: { x: adjustedX, y: adjustedY }
+    });
+    console.log(`${piece} clicked at (${adjustedX}, ${adjustedY})`);
   };
 
   const renderSquare = (index: number) => (
@@ -37,50 +59,17 @@ const TicTacToe: React.FC = () => {
     <div className="game">
       <div className="side-pieces left">
         <div className="pieces">
-          <img
-            key="o-1"
-            src={oImage}
-            alt="o-1"
-            onClick={() => handlePieceClick('o-1')}
-            style={{
-              position: 'absolute',
-              left: '100px',
-              top: '100px',
-            }}
-          />
-          <img
-            key="o-2"
-            src={oImage}
-            alt="o-2"
-            onClick={() => handlePieceClick('o-2')}
-            style={{
-              position: 'absolute',
-              left: '100px',
-              top: '200px',
-            }}
-          />
-          <img
-            key="o-3"
-            src={oImage}
-            alt="o-3"
-            onClick={() => handlePieceClick('o-3')}
-            style={{
-              position: 'absolute',
-              left: '100px',
-              top: '300px',
-            }}
-          />
-          <img
-            key="o-4"
-            src={oImage}
-            alt="o-4"
-            onClick={() => handlePieceClick('o-4')}
-            style={{
-              position: 'absolute',
-              left: '100px',
-              top: '400px',
-            }}
-          />
+          {(['o-1', 'o-2', 'o-3', 'o-4'] as PieceKey[]).map((piece) => (
+            <motion.div
+              key={piece}
+              className="animated-box"
+              animate={{ x: piecePositions[piece].x - 50, y: piecePositions[piece].y - 50 }} // Adjust to center the box
+              transition={{ duration: 1, ease: 'easeInOut' }}
+              onClick={(e) => handlePieceClick(piece, e)}
+            >
+              <img src={oImage} alt={piece} />
+            </motion.div>
+          ))}
         </div>
       </div>
       <div className="game-board">
@@ -102,61 +91,17 @@ const TicTacToe: React.FC = () => {
       </div>
       <div className="side-pieces right">
         <div className="pieces">
-          <img
-            key="x-1"
-            src={xImage}
-            alt="x-1"
-            onClick={() => handlePieceClick('x-1')}
-            style={{
-              position: 'absolute',
-              left: '1000px',
-              top: '100px',
-            }}
-          />
-          <img
-            key="x-2"
-            src={xImage}
-            alt="x-2"
-            onClick={() => handlePieceClick('x-2')}
-            style={{
-              position: 'absolute',
-              left: '1000px',
-              top: '200px',
-            }}
-          />
-          <img
-            key="x-3"
-            src={xImage}
-            alt="x-3"
-            onClick={() => handlePieceClick('x-3')}
-            style={{
-              position: 'absolute',
-              left: '1000px',
-              top: '300px',
-            }}
-          />
-          <img
-            key="x-4"
-            src={xImage}
-            alt="x-4"
-            onClick={() => handlePieceClick('x-4')}
-            style={{
-              position: 'absolute',
-              left: '1000px',
-              top: '400px',
-            }}
-          />
-          <img
-            key="x-5"
-            src={xImage}
-            alt="x-5"
-            onClick={() => handlePieceClick('x-5')}
-            style={{
-              position: 'absolute',
-              left: '1000px',
-              top: '500px',
-            }}
-          />
+          {(['x-1', 'x-2', 'x-3', 'x-4', 'x-5'] as PieceKey[]).map((piece) => (
+            <motion.div
+              key={piece}
+              className="animated-box"
+              animate={{ x: piecePositions[piece].x - 50, y: piecePositions[piece].y - 50 }} // Adjust to center the box
+              transition={{ duration: 1, ease: 'easeInOut' }}
+              onClick={(e) => handlePieceClick(piece, e)}
+            >
+              <img src={xImage} alt={piece} />
+            </motion.div>
+          ))}
         </div>
       </div>
       <div className="game-info">
