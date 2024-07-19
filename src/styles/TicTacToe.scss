@@ -1,32 +1,34 @@
 .game {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 200px;
+  display: block;
+  width: 100vw; /* Ensure full viewport width */
+  height: 100vh; /* Ensure full viewport height */
+  position: relative;
+  background-color: #173c10;
 }
 
 .game-board {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  gap: 10px;
-  margin: 0 20px;
-  position: relative; /* Added to position pieces correctly */
-  top: 100px; /* Adjust this value to move the board down */
+  grid-template-columns: repeat(3, 100px); /* Define 3 columns */
+  grid-template-rows: repeat(3, 100px); /* Define 3 rows */
+  gap: 5px; /* Space between squares */
+  width: 315px; /* Total width of the board including gaps */
+  height: 315px; /* Total height of the board including gaps */
+  position: absolute; /* Float over other elements */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the board */
+  z-index: 1; /* Ensure it is behind other elements */
 }
 
 .square {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
   background-color: #fff;
-  border: 1px solid #999;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 2px solid #000;
   cursor: pointer;
-  position: relative; /* Added to position pieces correctly */
 }
 
 .square img {
@@ -35,28 +37,26 @@
 }
 
 .animated-box {
-  width: 100px;
-  height: 100px;
+  width: 50px; /* Adjusted size */
+  height: 50px; /* Adjusted size */
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute; /* Allow the box to move freely */
   transform: translate(-50%, -50%); /* Center the box */
+  z-index: 10; /* Ensure it is above the board */
 }
 
 .animated-box img {
-  width: 50%; /* Adjusted size */
-  height: 50%; /* Adjusted size */
-}
-
-.game-info {
-  margin-top: 20px;
+  width: 100%; /* Adjusted size */
+  height: 100%; /* Adjusted size */
 }
 
 .side-pieces {
   display: flex;
   flex-direction: column;
   position: relative; /* Allow the pieces to move freely */
+  z-index: 10; /* Ensure they are above the board */
 }
 
 .pointer-info,
@@ -73,4 +73,9 @@
 
 .click-info {
   bottom: 50px; /* Adjust this value to position it above the pointer-info */
+}
+
+.game-info {
+  margin-top: 20px;
+  color: #fff;
 }

@@ -13,7 +13,7 @@ const TicTacToe: React.FC = () => {
   // Define the type for piece keys
   type PieceKey = 'x-1' | 'x-2' | 'x-3' | 'x-4' | 'x-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
 
-  const [piecePositions, setPiecePositions] = useState<Record<PieceKey, { x: number, y: number }>>({
+  const initialPositions = {
     'x-1': { x: 100, y: 90 },
     'x-2': { x: 100, y: 130 },
     'x-3': { x: 100, y: 180 },
@@ -23,29 +23,30 @@ const TicTacToe: React.FC = () => {
     'o-2': { x: 100, y: 130 },
     'o-3': { x: 100, y: 180 },
     'o-4': { x: 100, y: 240 },
-  });
+  };
 
-  const [clickPosition, setClickPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [piecePositions, setPiecePositions] = useState<Record<PieceKey, { x: number, y: number }>>(initialPositions);
+  const [clickPosition, setClickPosition] = useState<Record<PieceKey, { x: number; y: number }>>(initialPositions);
+
   const [nextXIndex, setNextXIndex] = useState(1); // Track the next 'x' piece to move
 
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
-    newBoard[index] = isXNext ? `x-${nextXIndex}` : `o-${nextXIndex}`;
+    newBoard[index] = isXNext ? `x-${index}` : `o-${index}`;
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
 
   const handleBoardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const containerRect = event.currentTarget.getBoundingClientRect();
-    const adjustedX = event.clientX - containerRect.left; // Adjusting for the left offset
-    const adjustedY = event.clientY - containerRect.top; // Adjusting for the top offset
-    setClickPosition({ x: adjustedX, y: adjustedY });
+    const adjustedX = event.clientX - containerRect.left + 25; // Adjusting for the left offset
+    const adjustedY = event.clientY - containerRect.top + 25; // Adjusting for the top offset
 
     if (nextXIndex <= 5) {
       const pieceKey: PieceKey = `x-${nextXIndex}` as PieceKey;
-      setPiecePositions({
-        ...piecePositions,
+      setClickPosition({
+        ...clickPosition,
         [pieceKey]: { x: adjustedX, y: adjustedY }
       });
       setNextXIndex(nextXIndex + 1);
@@ -73,7 +74,7 @@ const TicTacToe: React.FC = () => {
       <div className="side-pieces left">
         <motion.div
           className="animated-box"
-          animate={{ x: 100, y: 100 }} // Set the fixed position
+          animate={{ x: clickPosition['o-1'].x - 50, y: clickPosition['o-1'].y - 50 }} // Set the fixed position
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('o-1', e)}
         >
@@ -82,7 +83,7 @@ const TicTacToe: React.FC = () => {
 
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['o-2'].x, y: piecePositions['o-2'].y }}
+          animate={{ x: clickPosition['o-2'].x - 50, y: clickPosition['o-2'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('o-2', e)}
         >
@@ -90,7 +91,7 @@ const TicTacToe: React.FC = () => {
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['o-3'].x, y: piecePositions['o-3'].y }}
+          animate={{ x: clickPosition['o-3'].x - 50, y: clickPosition['o-3'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('o-3', e)}
         >
@@ -98,7 +99,7 @@ const TicTacToe: React.FC = () => {
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['o-4'].x, y: piecePositions['o-4'].y }}
+          animate={{ x: clickPosition['o-4'].x - 50, y: clickPosition['o-4'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('o-4', e)}
         >
@@ -125,7 +126,7 @@ const TicTacToe: React.FC = () => {
       <div className="side-pieces right">
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['x-1'].x, y: piecePositions['x-1'].y }}
+          animate={{ x: clickPosition['x-1'].x - 50, y: clickPosition['x-1'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('x-1', e)}
         >
@@ -133,7 +134,7 @@ const TicTacToe: React.FC = () => {
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['x-2'].x, y: piecePositions['x-2'].y }}
+          animate={{ x: clickPosition['x-2'].x - 50, y: clickPosition['x-2'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('x-2', e)}
         >
@@ -141,7 +142,7 @@ const TicTacToe: React.FC = () => {
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['x-3'].x, y: piecePositions['x-3'].y }}
+          animate={{ x: clickPosition['x-3'].x - 50, y: clickPosition['x-3'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('x-3', e)}
         >
@@ -149,7 +150,7 @@ const TicTacToe: React.FC = () => {
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['x-4'].x, y: piecePositions['x-4'].y }}
+          animate={{ x: clickPosition['x-4'].x - 50, y: clickPosition['x-4'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('x-4', e)}
         >
@@ -157,7 +158,7 @@ const TicTacToe: React.FC = () => {
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: piecePositions['x-5'].x, y: piecePositions['x-5'].y }}
+          animate={{ x: clickPosition['x-5'].x - 50, y: clickPosition['x-5'].y - 50 }} // Adjust to center the box
           transition={{ duration: 1, ease: 'easeInOut' }}
           onClick={(e) => handlePieceClick('x-5', e)}
         >
@@ -171,13 +172,8 @@ const TicTacToe: React.FC = () => {
         <p>Pointer X: {pointerX}</p>
         <p>Pointer Y: {pointerY}</p>
       </div>
-      <div className="click-info">
-        <p>Click X: {clickPosition.x}</p>
-        <p>Click Y: {clickPosition.y}</p>
-      </div>
     </div>
   );
 };
 
 export default TicTacToe;
-export {};
