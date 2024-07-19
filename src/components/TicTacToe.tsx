@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/TicTacToe.scss';
 import xImage from '../assets/x.png';
 import oImage from '../assets/o.png';
 import { useFollowPointer } from '../hooks/use-follow-pointer'; // Import the hook
+import Board from './Board';
 
 const TicTacToe: React.FC = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
+  const [xWins, setXWins] = useState(0);
+  const [oWins, setOWins] = useState(0);
   const { x: pointerX, y: pointerY } = useFollowPointer(); // Use the hook to get pointer position
 
   // Define the type for piece keys
@@ -55,7 +58,7 @@ const TicTacToe: React.FC = () => {
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
-    newBoard[index] = isXNext ? `x-${index}` : `o-${index}`;
+    newBoard[index] = isXNext ? `x` : `o`;
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
@@ -87,15 +90,55 @@ const TicTacToe: React.FC = () => {
   };
 
   const renderSquare = (index: number) => (
-    <div className="square">
+    <div className="square" onClick={() => handleSquareClick(index)}>
       {board[index] && (
         <img
-          src={board[index].startsWith('x') ? xImage : oImage}
+          src={board[index] === 'x' ? xImage : oImage}
           alt={board[index]}
         />
       )}
     </div>
   );
+
+  const calculateWinner = (squares: (string | null)[]) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  };
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setNextXIndex(1);
+    setClickPosition(initialPositions);
+  };
+
+  useEffect(() => {
+    const winner = calculateWinner(board);
+    if (winner) {
+      if (winner === 'x') {
+        setXWins(xWins + 1);
+      } else {
+        setOWins(oWins + 1);
+      }
+      setTimeout(() => {
+        resetGame(); // Reset the game without reloading the page
+      }, 2000);
+    }
+  }, [board]);
 
   return (
     <div className="game" onClick={handleBoardClick}>
@@ -134,23 +177,10 @@ const TicTacToe: React.FC = () => {
           <img src={oImage} alt="o-4" />
         </motion.div>
       </div>
-      <div className="game-board">
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
-      </div>
+      <Board
+        board={board}
+        renderSquare={renderSquare}
+      />
       <div className="side-pieces right">
         <motion.div
           className="animated-box"
@@ -195,6 +225,8 @@ const TicTacToe: React.FC = () => {
       </div>
       <div className="game-info">
         <div>Next player: {isXNext ? 'X' : 'O'}</div>
+        <div>X Wins: {xWins}</div>
+        <div>O Wins: {oWins}</div>
       </div>
       <div className="pointer-info">
         <p>Pointer X: {pointerX}</p>
