@@ -1,97 +1,75 @@
-// .game {
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: space-between;
-//   width: 100%;
-//   padding: 0 200px;
-// }
+.game {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 200px;
+}
 
-// .game-board {
-//   display: grid;
-//   grid-template-columns: repeat(3, 100px);
-//   grid-template-rows: repeat(3, 100px);
-//   gap: 10px;
-//   margin: 0 20px;
-// }
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
+  margin: 0 20px;
+  position: relative; /* Added to position pieces correctly */
+}
 
-// .square {
-//   width: 100px;
-//   height: 100px;
-//   background-color: #fff;
-//   border: 1px solid #999;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   cursor: pointer;
-//   position: relative; /* Ensure this is a relatively positioned container */
-// }
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 1px solid #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative; /* Added to position pieces correctly */
+}
 
-// .square img {
-//   width: 80%;
-//   height: 80%;
-// }
+.square img {
+  width: 80%;
+  height: 80%;
+}
 
-// .piece {
-//   &.off-board {
-//     width: 50px;
-//     height: 50px;
-//   }
-//   &.X-1 { top: 100px; left: 100px; position: absolute; animation: moveCircle 5s linear infinite; }
-//   &.X-2 { top: 200px; left: 100px; position: absolute; animation: moveCircle 5s linear infinite; }
-//   &.X-3 { top: 300px; left: 100px; position: absolute; animation: moveCircle 5s linear infinite; }
-//   &.X-4 { top: 400px; left: 100px; position: absolute; animation: moveCircle 5s linear infinite; }
-//   &.X-5 { top: 500px; left: 100px; position: absolute; animation: moveCircle 5s linear infinite; }
+.piece {
+  position: absolute;
+}
 
-//   &.O-1 { top: 100px; right: 100px; position: absolute; animation: moveCircle 5s linear infinite reverse; }
-//   &.O-2 { top: 200px; right: 100px; position: absolute; animation: moveCircle 5s linear infinite reverse; }
-//   &.O-3 { top: 300px; right: 100px; position: absolute; animation: moveCircle 5s linear infinite reverse; }
-//   &.O-4 { top: 400px; right: 100px; position: absolute; animation: moveCircle 5s linear infinite reverse; }
-//   &.O-5 { top: 500px; right: 100px; position: absolute; animation: moveCircle 5s linear infinite reverse; }
-// }
+.piece img {
+  width: 50%; /* Adjusted size */
+  height: 50%; /* Adjusted size */
+}
 
-// .game-info {
-//   margin-top: 20px;
-// }
+.game-info {
+  margin-top: 20px;
+}
 
-// .side-pieces {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
+.side-pieces {
+  display: flex;
+  flex-direction: column;
+}
 
-// .pieces {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
+.pieces {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-// @keyframes moveCircle {
-//   0% {
-//     transform: translate(0, 0) rotate(0deg);
-//   }
-//   25% {
-//     transform: translate(50px, 50px) rotate(90deg);
-//   }
-//   50% {
-//     transform: translate(100px, 0) rotate(180deg);
-//   }
-//   75% {
-//     transform: translate(50px, -50px) rotate(270deg);
-//   }
-//   100% {
-//     transform: translate(0, 0) rotate(360deg);
-//   }
-// }
+.pieces img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
 
-// .pointer-info {
-//   position: fixed;
-//   bottom: 10px;
-//   right: 10px;
-//   background: rgba(0, 0, 0, 0.75);
-//   color: #fff;
-//   padding: 10px;
-//   border-radius: 5px;
-//   font-family: sans-serif;
-// }
-
+.pointer-info {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: sans-serif;
+}

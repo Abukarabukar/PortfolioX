@@ -1,205 +1,173 @@
-// import React, { useState, useRef, useEffect } from 'react';
-// import ReactDOM from 'react-dom';
-// import '../styles/TicTacToe.scss'; // Corrected path
-// import xImage from '../assets/x.png';
-// import oImage from '../assets/o.png';
-// import { motion } from 'framer-motion';
-// import { useFollowPointer } from '../hooks/use-follow-pointer'; // Corrected path
-
-// const TicTacToe: React.FC = () => {
-//   const [squares, setSquares] = useState<Array<string | null>>(Array(9).fill(null));
-//   const [isXNext, setIsXNext] = useState(true);
-//   const [selectedPiece, setSelectedPiece] = useState<number | null>(null); // Track selected piece
-//   const pieceRefs = useRef<(HTMLImageElement | null)[]>([]); // Separate refs for pieces
-//   const [piecePosition, setPiecePosition] = useState({ x: 0, y: 0 }); // Track piece position
-
-//   // Apply the follow pointer effect
-//   const { x, y } = useFollowPointer();
-
-//   // Get click position
-//   const { x: clickX, y: clickY, clicked } = useClickPosition();
-
-//   useEffect(() => {
-//     if (clicked && selectedPiece !== null) {
-//       setPiecePosition({ x: clickX, y: clickY });
-//     }
-//   }, [clicked, clickX, clickY, selectedPiece]);
-
-//   // Handle moving the piece to the clicked position
-//   const handleClick = (index: number) => {
-//     if (squares[index] || calculateWinner(squares)) return;
-
-//     const newSquares = squares.slice();
-//     newSquares[index] = isXNext ? 'X' : 'O';
-//     setSquares(newSquares);
-//     setIsXNext(!isXNext);
-//   };
-
-//   const handlePieceClick = (index: number) => {
-//     setSelectedPiece(index);
-//   };
-
-//   const renderSquare = (index: number) => {
-//     return (
-//       <motion.button
-//         className="square"
-//         onClick={() => handleClick(index)}
-//         initial={{ scale: 0.8, opacity: 0.8 }}
-//         animate={{ scale: 1, opacity: 1 }}
-//         transition={{ duration: 0.3 }}
-//       >
-//         {squares[index] && (
-//           <motion.img
-//             className={`piece ${squares[index]}-onboard`}
-//             src={squares[index] === 'X' ? xImage : oImage}
-//             alt={squares[index] || ''}
-//             initial={{ opacity: 0, scale: 0.5 }}
-//             animate={{ opacity: 1, scale: 1 }}
-//             transition={{ duration: 0.5 }}
-//             ref={el => (pieceRefs.current[index] = el)} // Assign ref to piece
-//           />
-//         )}
-//       </motion.button>
-//     );
-//   };
-
-//   const renderSidePiece = (index: number, type: 'X' | 'O') => {
-//     const pieceImage = type === 'X' ? xImage : oImage;
-//     return (
-//       <motion.img
-//         key={index}
-//         className={`piece ${type}-${index + 1} off-board`}
-//         src={pieceImage}
-//         alt={type}
-//         initial={{ opacity: 0, y: -50 }}
-//         animate={index === selectedPiece ? { left: piecePosition.x, top: piecePosition.y } : { opacity: 1, y: 0 }}
-//         transition={{ duration: 0.5, delay: index * 0.1 }}
-//         ref={el => (pieceRefs.current[index] = el)} // Assign ref to piece
-//         style={index === selectedPiece ? { position: 'absolute', transform: 'translate(-50%, -50%)' } : undefined} // Move piece to clicked position
-//         onClick={() => handlePieceClick(index)} // Handle piece click
-//       />
-//     );
-//   };
-
-//   const winner = calculateWinner(squares);
-//   let status;
-//   if (winner) {
-//     status = 'Winner: ' + winner;
-//   } else {
-//     status = 'Next player: ' + (isXNext ? 'X' : 'O');
-//   }
-
-//   return (
-//     <div className="game">
-//       <div className="side-pieces left">
-//         <div className="pieces">
-//           {Array(4).fill(null).map((_, i) => renderSidePiece(i + 9, 'O'))}
-//         </div>
-//       </div>
-//       <div className="game-board">
-//         <div className="board-row">
-//           {renderSquare(0)}
-//           {renderSquare(1)}
-//           {renderSquare(2)}
-//         </div>
-//         <div className="board-row">
-//           {renderSquare(3)}
-//           {renderSquare(4)}
-//           {renderSquare(5)}
-//         </div>
-//         <div className="board-row">
-//           {renderSquare(6)}
-//           {renderSquare(7)}
-//           {renderSquare(8)}
-//         </div>
-//       </div>
-//       <div className="side-pieces right">
-//         <div className="pieces">
-//           {Array(5).fill(null).map((_, i) => renderSidePiece(i + 13, 'X'))}
-//         </div>
-//       </div>
-//       <div className="game-info">
-//         <div>{status}</div>
-//       </div>
-//       <div className="pointer-info">
-//         <p>X: {x}</p>
-//         <p>Y: {y}</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const calculateWinner = (squares: Array<string | null>) => {
-//   const lines = [
-//     [0, 1, 2],
-//     [3, 4, 5],
-//     [6, 7, 8],
-//     [0, 3, 6],
-//     [1, 4, 7],
-//     [2, 5, 8],
-//     [0, 4, 8],
-//     [2, 4, 6],
-//   ];
-//   for (let i = 0; i < lines.length; i++) {
-//     const [a, b, c] = lines[i];
-//     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-//       return squares[a];
-//     }
-//   }
-//   return null;
-// };
-
-// export default TicTacToe;
-
-// // Render the TicTacToe component
-// ReactDOM.render(<TicTacToe />, document.getElementById('root'));
-
-
-
-
-
-
-
-
-// import * as React from 'react';
-// import { motion } from 'framer-motion';
-// import {render} from 'react-dom';
-
-// import "./styles.css"
-
-// const App = () => {
-//   const [move, setMove] = React.useState(false);
-//   return (
-//     <div className="example-container">
-//       <motion.div
-//         animate={{ x: move ? 100 : -200}}
-//         transition={{ type: "inertia", velocity: 40}}
-//         onClick={() => {
-//           setMove(!move);
-//         }}
-//       ></motion.div>
-//       </div>
-//   ):
-// }:
-
-// render(<App />, document.getElementById('root'));
-
-
-
-
-import React from 'react';
-
-// Your TicTacToe component code here...
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import '../styles/TicTacToe.scss';
+import xImage from '../assets/x.png';
+import oImage from '../assets/o.png';
+import { useFollowPointer } from '../hooks/use-follow-pointer'; // Import the hook
 
 const TicTacToe: React.FC = () => {
+  const [board, setBoard] = useState(Array(9).fill(null));
+  const [isXNext, setIsXNext] = useState(true);
+  const { x: pointerX, y: pointerY } = useFollowPointer(); // Use the hook to get pointer position
+
+  const handleSquareClick = (index: number) => {
+    const newBoard = board.slice();
+    if (newBoard[index]) return;
+    newBoard[index] = isXNext ? `x-${index}` : `o-${index}`;
+    setBoard(newBoard);
+    setIsXNext(!isXNext);
+  };
+
+  const handlePieceClick = (piece: string) => {
+    console.log(`${piece} clicked`);
+  };
+
+  const renderSquare = (index: number) => (
+    <div className="square" onClick={() => handleSquareClick(index)}>
+      {board[index] && (
+        <img
+          src={board[index].startsWith('x') ? xImage : oImage}
+          alt={board[index]}
+        />
+      )}
+    </div>
+  );
+
   return (
-    <div className="tic-tac-toe">
-      {/* Your TicTacToe JSX code here */}
+    <div className="game">
+      <div className="side-pieces left">
+        <div className="pieces">
+          <img
+            key="o-1"
+            src={oImage}
+            alt="o-1"
+            onClick={() => handlePieceClick('o-1')}
+            style={{
+              position: 'absolute',
+              left: '100px',
+              top: '100px',
+            }}
+          />
+          <img
+            key="o-2"
+            src={oImage}
+            alt="o-2"
+            onClick={() => handlePieceClick('o-2')}
+            style={{
+              position: 'absolute',
+              left: '100px',
+              top: '200px',
+            }}
+          />
+          <img
+            key="o-3"
+            src={oImage}
+            alt="o-3"
+            onClick={() => handlePieceClick('o-3')}
+            style={{
+              position: 'absolute',
+              left: '100px',
+              top: '300px',
+            }}
+          />
+          <img
+            key="o-4"
+            src={oImage}
+            alt="o-4"
+            onClick={() => handlePieceClick('o-4')}
+            style={{
+              position: 'absolute',
+              left: '100px',
+              top: '400px',
+            }}
+          />
+        </div>
+      </div>
+      <div className="game-board">
+        <div className="board-row">
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </div>
+      </div>
+      <div className="side-pieces right">
+        <div className="pieces">
+          <img
+            key="x-1"
+            src={xImage}
+            alt="x-1"
+            onClick={() => handlePieceClick('x-1')}
+            style={{
+              position: 'absolute',
+              left: '1000px',
+              top: '100px',
+            }}
+          />
+          <img
+            key="x-2"
+            src={xImage}
+            alt="x-2"
+            onClick={() => handlePieceClick('x-2')}
+            style={{
+              position: 'absolute',
+              left: '1000px',
+              top: '200px',
+            }}
+          />
+          <img
+            key="x-3"
+            src={xImage}
+            alt="x-3"
+            onClick={() => handlePieceClick('x-3')}
+            style={{
+              position: 'absolute',
+              left: '1000px',
+              top: '300px',
+            }}
+          />
+          <img
+            key="x-4"
+            src={xImage}
+            alt="x-4"
+            onClick={() => handlePieceClick('x-4')}
+            style={{
+              position: 'absolute',
+              left: '1000px',
+              top: '400px',
+            }}
+          />
+          <img
+            key="x-5"
+            src={xImage}
+            alt="x-5"
+            onClick={() => handlePieceClick('x-5')}
+            style={{
+              position: 'absolute',
+              left: '1000px',
+              top: '500px',
+            }}
+          />
+        </div>
+      </div>
+      <div className="game-info">
+        <div>Next player: {isXNext ? 'X' : 'O'}</div>
+      </div>
+      <div className="pointer-info">
+        <p>Pointer X: {pointerX}</p>
+        <p>Pointer Y: {pointerY}</p>
+      </div>
     </div>
   );
 };
 
 export default TicTacToe;
-
-// Ensure this is at the end of the file
-export {};
