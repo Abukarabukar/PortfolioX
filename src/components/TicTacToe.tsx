@@ -59,7 +59,7 @@ const TicTacToe: React.FC = () => {
   };
 
   const renderSquare = (index: number) => (
-    <div className="square" onClick={() => handleSquareClick(index)}>
+    <div className="square">
       {board[index] && (
         <img
           src={board[index].startsWith('x') ? xImage : oImage}
@@ -68,6 +68,7 @@ const TicTacToe: React.FC = () => {
       )}
     </div>
   );
+  
 
   return (
     <div className="game" onClick={handleBoardClick}>
