@@ -58,10 +58,11 @@ const TicTacToe: React.FC = () => {
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
-    newBoard[index] = isXNext ? `x` : `o`;
+    newBoard[index] = isXNext ? 'transparent-x' : 'o';
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
+  
 
   const handleBoardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const containerRect = event.currentTarget.getBoundingClientRect();
@@ -91,7 +92,7 @@ const TicTacToe: React.FC = () => {
 
   const renderSquare = (index: number) => (
     <div className="square" onClick={() => handleSquareClick(index)}>
-      {board[index] && (
+      {board[index] && board[index] !== 'transparent-x' && (
         <img
           src={board[index] === 'x' ? xImage : oImage}
           alt={board[index]}
@@ -99,6 +100,7 @@ const TicTacToe: React.FC = () => {
       )}
     </div>
   );
+  
 
   const calculateWinner = (squares: (string | null)[]) => {
     const lines = [
@@ -127,18 +129,18 @@ const TicTacToe: React.FC = () => {
   };
 
   useEffect(() => {
-    const winner = calculateWinner(board);
-    if (winner) {
-      if (winner === 'x') {
-        setXWins(xWins + 1);
-      } else {
-        setOWins(oWins + 1);
-      }
-      setTimeout(() => {
-        resetGame(); // Reset the game without reloading the page
-      }, 2000);
+  const winner = calculateWinner(board);
+  if (winner) {
+    if (winner === 'x') {
+      setXWins(xWins + 1);
+    } else {
+      setOWins(oWins + 1);
     }
-  }, [board]);
+    setTimeout(() => {
+      resetGame(); // Reset the game without reloading the page
+    }, 2000);
+  }
+}, [board]);
 
   return (
     <div className="game" onClick={handleBoardClick}>
