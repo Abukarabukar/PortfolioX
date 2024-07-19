@@ -5,7 +5,15 @@
     "sourceMap": false,
     "outDir": "../../../../target/cypress/tsc",
     "target": "es2018",
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node"],
+    "jsx": "react-jsx"
   },
-  "include": ["./../../../../cypress*.config.ts", "./**/*.ts"]
+  "include": [
+    "./../../../../cypress*.config.ts",
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/global.d.ts"
+  ]
 }

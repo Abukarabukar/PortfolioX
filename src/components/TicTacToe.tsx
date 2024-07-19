@@ -14,15 +14,15 @@ const TicTacToe: React.FC = () => {
   type PieceKey = 'x-1' | 'x-2' | 'x-3' | 'x-4' | 'x-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
 
   const initialPositions = {
-    'x-1': { x: 100, y: 90 },
-    'x-2': { x: 100, y: 130 },
-    'x-3': { x: 100, y: 180 },
-    'x-4': { x: 100, y: 240 },
-    'x-5': { x: 100, y: 280 },
-    'o-1': { x: 100, y: 90 },
-    'o-2': { x: 100, y: 130 },
-    'o-3': { x: 100, y: 180 },
-    'o-4': { x: 100, y: 240 },
+    'x-1': { x: 1000, y: 90 },
+    'x-2': { x: 1000, y: 200 },
+    'x-3': { x: 1000, y: 310 },
+    'x-4': { x: 1000, y: 420 },
+    'x-5': { x: 1000, y: 530 },
+    'o-1': { x: 250, y: 90 },
+    'o-2': { x: 250, y: 200 },
+    'o-3': { x: 250, y: 310 },
+    'o-4': { x: 250, y: 420 },
   };
 
   const [piecePositions, setPiecePositions] = useState<Record<PieceKey, { x: number, y: number }>>(initialPositions);
