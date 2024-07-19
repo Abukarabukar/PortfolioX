@@ -30,6 +30,28 @@ const TicTacToe: React.FC = () => {
 
   const [nextXIndex, setNextXIndex] = useState(1); // Track the next 'x' piece to move
 
+  const boxDimensions = [
+    { startX: 460, startY: 124, endX: 560, endY: 224 }, // Box 1
+    { startX: 460, startY: 224, endX: 560, endY: 324 }, // Box 2
+    { startX: 460, startY: 324, endX: 560, endY: 424 }, // Box 3
+    { startX: 560, startY: 124, endX: 660, endY: 224 }, // Box 4
+    { startX: 560, startY: 224, endX: 660, endY: 324 }, // Box 5
+    { startX: 560, startY: 324, endX: 660, endY: 424 }, // Box 6
+    { startX: 660, startY: 124, endX: 760, endY: 224 }, // Box 7
+    { startX: 660, startY: 224, endX: 760, endY: 324 }, // Box 8
+    { startX: 660, startY: 324, endX: 760, endY: 424 }, // Box 9
+  ];
+
+  const checkBox = (x: number, y: number) => {
+    for (let i = 0; i < boxDimensions.length; i++) {
+      const { startX, startY, endX, endY } = boxDimensions[i];
+      if (x >= startX && x <= endX && y >= startY && y <= endY) {
+        return i;
+      }
+    }
+    return -1;
+  };
+
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
@@ -49,6 +71,12 @@ const TicTacToe: React.FC = () => {
         ...clickPosition,
         [pieceKey]: { x: adjustedX, y: adjustedY }
       });
+
+      const boxIndex = checkBox(adjustedX, adjustedY);
+      if (boxIndex !== -1) {
+        handleSquareClick(boxIndex);
+      }
+
       setNextXIndex(nextXIndex + 1);
     }
     console.log(`Piece x-${nextXIndex} moved to (${adjustedX}, ${adjustedY})`);
@@ -68,7 +96,6 @@ const TicTacToe: React.FC = () => {
       )}
     </div>
   );
-  
 
   return (
     <div className="game" onClick={handleBoardClick}>
