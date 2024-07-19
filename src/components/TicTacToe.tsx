@@ -25,23 +25,36 @@ const TicTacToe: React.FC = () => {
     'o-4': { x: 100, y: 240 },
   });
 
+  const [clickPosition, setClickPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [nextXIndex, setNextXIndex] = useState(1); // Track the next 'x' piece to move
+
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
-    newBoard[index] = isXNext ? `x-${index}` : `o-${index}`;
+    newBoard[index] = isXNext ? `x-${nextXIndex}` : `o-${nextXIndex}`;
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
 
-  const handlePieceClick = (piece: PieceKey, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleBoardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const containerRect = event.currentTarget.getBoundingClientRect();
     const adjustedX = event.clientX - containerRect.left; // Adjusting for the left offset
     const adjustedY = event.clientY - containerRect.top; // Adjusting for the top offset
-    setPiecePositions({
-      ...piecePositions,
-      [piece]: { x: adjustedX, y: adjustedY }
-    });
-    console.log(`${piece} clicked at (${adjustedX}, ${adjustedY})`);
+    setClickPosition({ x: adjustedX, y: adjustedY });
+
+    if (nextXIndex <= 5) {
+      const pieceKey: PieceKey = `x-${nextXIndex}` as PieceKey;
+      setPiecePositions({
+        ...piecePositions,
+        [pieceKey]: { x: adjustedX, y: adjustedY }
+      });
+      setNextXIndex(nextXIndex + 1);
+    }
+    console.log(`Piece x-${nextXIndex} moved to (${adjustedX}, ${adjustedY})`);
+  };
+
+  const handlePieceClick = (piece: PieceKey, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    // This function can be used to handle piece clicks if needed
   };
 
   const renderSquare = (index: number) => (
@@ -56,21 +69,41 @@ const TicTacToe: React.FC = () => {
   );
 
   return (
-    <div className="game">
+    <div className="game" onClick={handleBoardClick}>
       <div className="side-pieces left">
-        <div className="pieces">
-          {(['o-1', 'o-2', 'o-3', 'o-4'] as PieceKey[]).map((piece) => (
-            <motion.div
-              key={piece}
-              className="animated-box"
-              animate={{ x: piecePositions[piece].x - 50, y: piecePositions[piece].y - 50 }} // Adjust to center the box
-              transition={{ duration: 1, ease: 'easeInOut' }}
-              onClick={(e) => handlePieceClick(piece, e)}
-            >
-              <img src={oImage} alt={piece} />
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: 100, y: 100 }} // Set the fixed position
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('o-1', e)}
+        >
+          <img src={oImage} alt="o-1" />
+        </motion.div>
+
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['o-2'].x, y: piecePositions['o-2'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('o-2', e)}
+        >
+          <img src={oImage} alt="o-2" />
+        </motion.div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['o-3'].x, y: piecePositions['o-3'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('o-3', e)}
+        >
+          <img src={oImage} alt="o-3" />
+        </motion.div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['o-4'].x, y: piecePositions['o-4'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('o-4', e)}
+        >
+          <img src={oImage} alt="o-4" />
+        </motion.div>
       </div>
       <div className="game-board">
         <div className="board-row">
@@ -90,19 +123,46 @@ const TicTacToe: React.FC = () => {
         </div>
       </div>
       <div className="side-pieces right">
-        <div className="pieces">
-          {(['x-1', 'x-2', 'x-3', 'x-4', 'x-5'] as PieceKey[]).map((piece) => (
-            <motion.div
-              key={piece}
-              className="animated-box"
-              animate={{ x: piecePositions[piece].x - 50, y: piecePositions[piece].y - 50 }} // Adjust to center the box
-              transition={{ duration: 1, ease: 'easeInOut' }}
-              onClick={(e) => handlePieceClick(piece, e)}
-            >
-              <img src={xImage} alt={piece} />
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['x-1'].x, y: piecePositions['x-1'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('x-1', e)}
+        >
+          <img src={xImage} alt="x-1" />
+        </motion.div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['x-2'].x, y: piecePositions['x-2'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('x-2', e)}
+        >
+          <img src={xImage} alt="x-2" />
+        </motion.div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['x-3'].x, y: piecePositions['x-3'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('x-3', e)}
+        >
+          <img src={xImage} alt="x-3" />
+        </motion.div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['x-4'].x, y: piecePositions['x-4'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('x-4', e)}
+        >
+          <img src={xImage} alt="x-4" />
+        </motion.div>
+        <motion.div
+          className="animated-box"
+          animate={{ x: piecePositions['x-5'].x, y: piecePositions['x-5'].y }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          onClick={(e) => handlePieceClick('x-5', e)}
+        >
+          <img src={xImage} alt="x-5" />
+        </motion.div>
       </div>
       <div className="game-info">
         <div>Next player: {isXNext ? 'X' : 'O'}</div>
@@ -111,8 +171,13 @@ const TicTacToe: React.FC = () => {
         <p>Pointer X: {pointerX}</p>
         <p>Pointer Y: {pointerY}</p>
       </div>
+      <div className="click-info">
+        <p>Click X: {clickPosition.x}</p>
+        <p>Click Y: {clickPosition.y}</p>
+      </div>
     </div>
   );
 };
 
 export default TicTacToe;
+export {};

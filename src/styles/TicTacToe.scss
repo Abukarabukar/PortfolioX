@@ -34,11 +34,17 @@
   height: 80%;
 }
 
-.piece {
-  position: absolute;
+.animated-box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute; /* Allow the box to move freely */
+  transform: translate(-50%, -50%); /* Center the box */
 }
 
-.piece img {
+.animated-box img {
   width: 50%; /* Adjusted size */
   height: 50%; /* Adjusted size */
 }
@@ -50,27 +56,21 @@
 .side-pieces {
   display: flex;
   flex-direction: column;
+  position: relative; /* Allow the pieces to move freely */
 }
 
-.pieces {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pieces img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 10px;
-}
-
-.pointer-info {
+.pointer-info,
+.click-info {
   position: fixed;
-  bottom: 10px;
+  bottom: 290px;
   left: 10px;
   background: rgba(0, 0, 0, 0.75);
   color: #fff;
   padding: 10px;
   border-radius: 5px;
   font-family: sans-serif;
+}
+
+.click-info {
+  bottom: 50px; /* Adjust this value to position it above the pointer-info */
 }

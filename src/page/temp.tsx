@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { motion } from 'framer-motion';
-
 import './temp.scss';
 import xImage from '../assets/x.png'; // Importing the image
 import { useFollowPointer } from '../hooks/use-follow-pointer'; // Import the hook
@@ -30,8 +29,8 @@ const Apps = () => {
     <div className="example-container" onClick={handleClick}>
       <motion.div
         className="animated-box"
-        animate={{ x: clickPosition.x -50 , y: clickPosition.y -50 }} // Adjust to center the box
-        transition={{ duration: 10, ease: 'easeInOut' }}
+        animate={{ x: clickPosition.x - 25, y: clickPosition.y - 25 }} // Adjust to center the box
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
         <img src={xImage} alt="Animated" />
       </motion.div>
