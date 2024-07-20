@@ -92,10 +92,11 @@ const TicTacToe: React.FC = () => {
 
   const renderSquare = (index: number) => (
     <div className="square" onClick={() => handleSquareClick(index)}>
-      {board[index] && board[index] !== 'transparent-x' && (
+      {board[index] && (
         <img
-          src={board[index] === 'x' ? xImage : oImage}
+          src={board[index] === 'o' ? oImage : xImage}
           alt={board[index]}
+          style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
         />
       )}
     </div>
@@ -131,7 +132,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
   const winner = calculateWinner(board);
   if (winner) {
-    if (winner === 'x') {
+    if (winner === 'transparent-x') {
       setXWins(xWins + 1);
     } else {
       setOWins(oWins + 1);
