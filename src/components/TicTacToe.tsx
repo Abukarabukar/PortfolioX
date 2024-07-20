@@ -85,7 +85,7 @@ const TicTacToe: React.FC = () => {
 
 
 
-  const checkBox1 = (x: number, y: number) => {
+  const checkBox = (x: number, y: number) => {
     for (let i = 0; i < boxDimensions.length; i++) {
       const { startX, startY, endX, endY } = boxDimensions[i];
       if (x >= startX && x <= endX && y >= startY && y <= endY) {
@@ -108,52 +108,21 @@ const TicTacToe: React.FC = () => {
     const containerRect = event.currentTarget.getBoundingClientRect();
     const adjustedX = event.clientX - containerRect.left + 25; // Adjusting for the left offset
     const adjustedY = event.clientY - containerRect.top + 25; // Adjusting for the top offset
-  
-    // Check if the pointer is within the bounds of each specific box
-    const checkBox = (x: number, y: number) => {
-      for (let i = 0; i < boxDimensions.length; i++) {
-        const { startX, startY, endX, endY } = boxDimensions[i];
-        if (x >= startX && x <= endX && y >= startY && y <= endY) {
-          return i;
-        }
-      }
-      return -1;
-    };
-  
-    const boxIndex = checkBox(adjustedX, adjustedY);
-  
-    const updateClickPositionForBox = (index: number) => {
-      const positions = [
-        { x: 510, y: 174 },
-        { x: 510, y: 274 },
-        { x: 510, y: 374 },
-        { x: 610, y: 174 },
-        { x: 610, y: 274 }
-      ];
-      if (index >= 0 && index < positions.length) {
-        setClickPosition(prevPosition => ({
-          ...prevPosition,
-          [`x-${index + 1}`]: positions[index]
-        }));
-      }
-    };
-  
-    updateClickPositionForBox(boxIndex);
-  
+
     if (nextXIndex <= 5) {
       const pieceKey: PieceKey = `x-${nextXIndex}` as PieceKey;
-      setClickPosition(prevPosition => ({
-        ...prevPosition,
+      setClickPosition({
+        ...clickPosition,
         [pieceKey]: { x: adjustedX, y: adjustedY }
-      }));
-  
+      });
+
+      const boxIndex = checkBox(adjustedX, adjustedY);
       if (boxIndex !== -1) {
         handleSquareClick(boxIndex);
       }
-  
+
       setNextXIndex(nextXIndex + 1);
     }
-  
     console.log(`Piece x-${nextXIndex} moved to (${adjustedX}, ${adjustedY})`);
   };
   
