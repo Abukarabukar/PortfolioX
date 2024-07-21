@@ -80,18 +80,6 @@ const TicTacToe: React.FC = () => {
     console.log(`Piece x-${nextXIndex} moved to (${adjustedX}, ${adjustedY})`);
   };
 
-  const renderSquare = (index: number) => (
-    <div className="square" onClick={() => handleSquareClick(index)}>
-      {board[index] && (
-        <img
-          src={board[index] === 'o' ? oImage : xImage}
-          alt={board[index]}
-          style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
-        />
-      )}
-    </div>
-  );
-
   const calculateWinner = (squares: (string | null)[]) => {
     const lines = [
       [0, 1, 2],
@@ -136,7 +124,7 @@ const TicTacToe: React.FC = () => {
     <div className="game" onClick={handleBoardClick}>
       <Board
         board={board}
-        renderSquare={renderSquare}
+        onClick={handleSquareClick}
       />
       <div className="side-pieces right">
         <motion.div

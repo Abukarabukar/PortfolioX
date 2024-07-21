@@ -1,15 +1,19 @@
 import React from 'react';
-import xImage from '../assets/x.png';
-import oImage from '../assets/o.png';
-
-type PieceKey = 'x-1' | 'x-2' | 'x-3' | 'x-4' | 'x-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
+import Square from './Square';
 
 interface BoardProps {
   board: (string | null)[];
-  renderSquare: (index: number) => JSX.Element;
+  onClick: (index: number) => void;
 }
 
-const Board: React.FC<BoardProps> = ({ board, renderSquare }) => {
+const Board: React.FC<BoardProps> = ({ board, onClick }) => {
+  const renderSquare = (index: number) => (
+    <Square
+      value={board[index]}
+      onClick={() => onClick(index)}
+    />
+  );
+
   return (
     <div className="game-board">
       <div className="board-row">
@@ -32,9 +36,3 @@ const Board: React.FC<BoardProps> = ({ board, renderSquare }) => {
 };
 
 export default Board;
-
-
-
-
-
-
