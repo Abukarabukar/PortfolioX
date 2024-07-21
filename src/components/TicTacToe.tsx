@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import '../styles/TicTacToe.scss';
 import xImage from '../assets/x.png';
 import oImage from '../assets/o.png';
-import { useFollowPointer } from '../hooks/use-follow-pointer'; // Import the hook
 import Board from './Board';
 
 const TicTacToe: React.FC = () => {
@@ -11,33 +10,7 @@ const TicTacToe: React.FC = () => {
   const [isXNext, setIsXNext] = useState(true);
   const [xWins, setXWins] = useState(0);
   const [oWins, setOWins] = useState(0);
-  const { x: pointerX, y: pointerY } = useFollowPointer(); // Use the hook to get pointer position
 
-    // Define new state variables for x and y positions
-    const [xPosition, setXPosition] = useState<Record<PieceKey, number>>({
-      'x-1': 0,
-      'x-2': 0,
-      'x-3': 0,
-      'x-4': 0,
-      'x-5': 0,
-      'o-1': 0,
-      'o-2': 0,
-      'o-3': 0,
-      'o-4': 0,
-    });
-  
-    const [yPosition, setYPosition] = useState<Record<PieceKey, number>>({
-      'x-1': 0,
-      'x-2': 0,
-      'x-3': 0,
-      'x-4': 0,
-      'x-5': 0,
-      'o-1': 0,
-      'o-2': 0,
-      'o-3': 0,
-      'o-4': 0,
-    });
-  // Define the type for piece keys
   type PieceKey = 'x-1' | 'x-2' | 'x-3' | 'x-4' | 'x-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
 
   const initialPositions = {
@@ -51,39 +24,21 @@ const TicTacToe: React.FC = () => {
     'o-3': { x: 250, y: 310 },
     'o-4': { x: 250, y: 420 },
   };
-  
 
-  const [piecePositions, setPiecePositions] = useState<Record<PieceKey, { x: number, y: number }>>(initialPositions);
   const [clickPosition, setClickPosition] = useState<Record<PieceKey, { x: number; y: number }>>(initialPositions);
-
-  const [nextXIndex, setNextXIndex] = useState(1); // Track the next 'x' piece to move
+  const [nextXIndex, setNextXIndex] = useState(1);
 
   const boxDimensions = [
-    { startX: 460, startY: 124, endX: 560, endY: 224 }, // Box 1
-    { startX: 460, startY: 224, endX: 560, endY: 324 }, // Box 2
-    { startX: 460, startY: 324, endX: 560, endY: 424 }, // Box 3
-    { startX: 560, startY: 124, endX: 660, endY: 224 }, // Box 4
-    { startX: 560, startY: 224, endX: 660, endY: 324 }, // Box 5
-    { startX: 560, startY: 324, endX: 660, endY: 424 }, // Box 6
-    { startX: 660, startY: 124, endX: 760, endY: 224 }, // Box 7
-    { startX: 660, startY: 224, endX: 760, endY: 324 }, // Box 8
-    { startX: 660, startY: 324, endX: 760, endY: 424 }, // Box 9
+    { startX: 460, startY: 124, endX: 560, endY: 224 },
+    { startX: 460, startY: 224, endX: 560, endY: 324 },
+    { startX: 460, startY: 324, endX: 560, endY: 424 },
+    { startX: 560, startY: 124, endX: 660, endY: 224 },
+    { startX: 560, startY: 224, endX: 660, endY: 324 },
+    { startX: 560, startY: 324, endX: 660, endY: 424 },
+    { startX: 660, startY: 124, endX: 760, endY: 224 },
+    { startX: 660, startY: 224, endX: 760, endY: 324 },
+    { startX: 660, startY: 324, endX: 760, endY: 424 },
   ];
-
-
-  const newDimensions = [
-    { startX: 510, startY: 174 }, // Box 1
-    { startX: 510, startY: 274 }, // Box 2
-    { startX: 510, startY: 374 }, // Box 3
-    { startX: 610, startY: 174 }, // Box 4
-    { startX: 610, startY: 274 }, // Box 5
-    { startX: 610, startY: 374 }, // Box 6
-    { startX: 710, startY: 174 }, // Box 7
-    { startX: 710, startY: 274 }, // Box 8
-    { startX: 710, startY: 374 }  // Box 9
-  ];
-
-
 
   const checkBox = (x: number, y: number) => {
     for (let i = 0; i < boxDimensions.length; i++) {
@@ -102,12 +57,11 @@ const TicTacToe: React.FC = () => {
     setBoard(newBoard);
     setIsXNext(!isXNext);
   };
-  
 
   const handleBoardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const containerRect = event.currentTarget.getBoundingClientRect();
-    const adjustedX = event.clientX - containerRect.left + 25; // Adjusting for the left offset
-    const adjustedY = event.clientY - containerRect.top + 25; // Adjusting for the top offset
+    const adjustedX = event.clientX - containerRect.left + 25;
+    const adjustedY = event.clientY - containerRect.top + 25;
 
     if (nextXIndex <= 5) {
       const pieceKey: PieceKey = `x-${nextXIndex}` as PieceKey;
@@ -125,12 +79,6 @@ const TicTacToe: React.FC = () => {
     }
     console.log(`Piece x-${nextXIndex} moved to (${adjustedX}, ${adjustedY})`);
   };
-  
-  
-
-  const handlePieceClick = (piece: PieceKey, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    // This function can be used to handle piece clicks if needed
-  };
 
   const renderSquare = (index: number) => (
     <div className="square" onClick={() => handleSquareClick(index)}>
@@ -143,7 +91,6 @@ const TicTacToe: React.FC = () => {
       )}
     </div>
   );
-  
 
   const calculateWinner = (squares: (string | null)[]) => {
     const lines = [
@@ -172,51 +119,21 @@ const TicTacToe: React.FC = () => {
   };
 
   useEffect(() => {
-  const winner = calculateWinner(board);
-  if (winner) {
-    if (winner === 'transparent-x') {
-      setXWins(xWins + 1);
-    } else {
-      setOWins(oWins + 1);
+    const winner = calculateWinner(board);
+    if (winner) {
+      if (winner === 'transparent-x') {
+        setXWins(xWins + 1);
+      } else {
+        setOWins(oWins + 1);
+      }
+      setTimeout(() => {
+        resetGame();
+      }, 2000);
     }
-    setTimeout(() => {
-      resetGame(); // Reset the game without reloading the page
-    }, 2000);
-  }
-}, [board]);
+  }, [board]);
 
   return (
     <div className="game" onClick={handleBoardClick}>
-    <div className="side-pieces left">
-  <motion.div
-    className="animated-box"
-    animate={{ x: clickPosition['o-1'].x - 50, y: clickPosition['o-1'].y - 50 }} // Set the fixed position
-  >
-    <img src={oImage} alt="o-1" />
-  </motion.div>
-
-  <motion.div
-    className="animated-box"
-    animate={{ x: clickPosition['o-2'].x - 50, y: clickPosition['o-2'].y - 50 }} // Adjust to center the box
-  >
-    <img src={oImage} alt="o-2" />
-  </motion.div>
-  
-  <motion.div
-    className="animated-box"
-    animate={{ x: clickPosition['o-3'].x - 50, y: clickPosition['o-3'].y - 50 }} // Adjust to center the box
-  >
-    <img src={oImage} alt="o-3" />
-  </motion.div>
-  
-  <motion.div
-    className="animated-box"
-    animate={{ x: clickPosition['o-4'].x - 50, y: clickPosition['o-4'].y - 50 }} // Adjust to center the box
-  >
-    <img src={oImage} alt="o-4" />
-  </motion.div>
-</div>
-
       <Board
         board={board}
         renderSquare={renderSquare}
@@ -224,41 +141,36 @@ const TicTacToe: React.FC = () => {
       <div className="side-pieces right">
         <motion.div
           className="animated-box"
-          animate={{ x: clickPosition['x-1'].x - 50, y: clickPosition['x-1'].y - 50 }} // Adjust to center the box
+          animate={{ x: clickPosition['x-1'].x - 50, y: clickPosition['x-1'].y - 50 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-          onClick={(e) => handlePieceClick('x-1', e)}
         >
           <img src={xImage} alt="x-1" />
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: clickPosition['x-2'].x - 50, y: clickPosition['x-2'].y - 50 }} // Adjust to center the box
+          animate={{ x: clickPosition['x-2'].x - 50, y: clickPosition['x-2'].y - 50 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-          onClick={(e) => handlePieceClick('x-2', e)}
         >
           <img src={xImage} alt="x-2" />
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: clickPosition['x-3'].x - 50, y: clickPosition['x-3'].y - 50 }} // Adjust to center the box
+          animate={{ x: clickPosition['x-3'].x - 50, y: clickPosition['x-3'].y - 50 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-          onClick={(e) => handlePieceClick('x-3', e)}
         >
           <img src={xImage} alt="x-3" />
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: clickPosition['x-4'].x - 50, y: clickPosition['x-4'].y - 50 }} // Adjust to center the box
+          animate={{ x: clickPosition['x-4'].x - 50, y: clickPosition['x-4'].y - 50 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-          onClick={(e) => handlePieceClick('x-4', e)}
         >
           <img src={xImage} alt="x-4" />
         </motion.div>
         <motion.div
           className="animated-box"
-          animate={{ x: clickPosition['x-5'].x - 50, y: clickPosition['x-5'].y - 50 }} // Adjust to center the box
+          animate={{ x: clickPosition['x-5'].x - 50, y: clickPosition['x-5'].y - 50 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-          onClick={(e) => handlePieceClick('x-5', e)}
         >
           <img src={xImage} alt="x-5" />
         </motion.div>
@@ -267,10 +179,6 @@ const TicTacToe: React.FC = () => {
         <div>Next player: {isXNext ? 'X' : 'O'}</div>
         <div>X Wins: {xWins}</div>
         <div>O Wins: {oWins}</div>
-      </div>
-      <div className="pointer-info">
-        <p>Pointer X: {pointerX}</p>
-        <p>Pointer Y: {pointerY}</p>
       </div>
     </div>
   );
