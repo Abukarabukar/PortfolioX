@@ -62,10 +62,43 @@ const TicTacToe: React.FC = () => {
 
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
-    if (newBoard[index]) return;
-    newBoard[index] = isXNext ? 'transparent-x' : 'o';
+    if (newBoard[index]) return; // Prevent move if the square is occupied
+    newBoard[index] = 'transparent-x';
     setBoard(newBoard);
-    setIsXNext(!isXNext);
+    setIsXNext(false);
+
+    setTimeout(() => {
+      handleComputerMove(newBoard);
+    }, 500); // Delay for computer move
+  };
+
+  const handleAbukarPiecePlacement = (x: number, y: number) => {
+    const boxIndex = checkBox(x, y);
+    if (boxIndex !== -1 && board[boxIndex] === null) { // Ensure the box is not occupied
+      const { x: centerX, y: centerY } = centerInBox(boxIndex);
+      const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
+      setClickPosition({
+        ...clickPosition,
+        [pieceKey]: { x: centerX, y: centerY }
+      });
+
+      const newBoard = board.slice();
+      newBoard[boxIndex] = 'transparent-x'; // Mark the box as occupied by abukar
+      setBoard(newBoard);
+      setNextAbukarIndex(nextAbukarIndex + 1);
+    }
+  };
+
+  const handleComputerMove = (currentBoard: (string | null)[]) => {
+    const newBoard = currentBoard.slice();
+    for (let i = 0; i < newBoard.length; i++) {
+      if (newBoard[i] === null) {
+        newBoard[i] = 'o';
+        setBoard(newBoard);
+        setIsXNext(true);
+        break;
+      }
+    }
   };
 
   const handleBoardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -73,20 +106,10 @@ const TicTacToe: React.FC = () => {
     const adjustedX = event.clientX - containerRect.left + 25;
     const adjustedY = event.clientY - containerRect.top + 25;
 
-    if (nextAbukarIndex <= 5) {
-      const boxIndex = checkBox(adjustedX, adjustedY);
-      if (boxIndex !== -1) {
-        const { x, y } = centerInBox(boxIndex);
-        const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
-        setClickPosition({
-          ...clickPosition,
-          [pieceKey]: { x, y }
-        });
-
-        handleSquareClick(boxIndex);
-        setNextAbukarIndex(nextAbukarIndex + 1);
-      }
+    if (nextAbukarIndex <= 5 && isXNext) {
+      handleAbukarPiecePlacement(adjustedX, adjustedY);
     }
+
     setClickInfo({ x: adjustedX, y: adjustedY });
     console.log(`Piece abukar-${nextAbukarIndex} moved to (${adjustedX}, ${adjustedY})`);
   };
