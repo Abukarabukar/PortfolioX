@@ -66,38 +66,22 @@ const TicTacToe: React.FC = () => {
     newBoard[index] = 'transparent-x';
     setBoard(newBoard);
     setIsXNext(false);
-
-    setTimeout(() => {
-      handleComputerMove(newBoard);
-    }, 500); // Delay for computer move
   };
 
   const handleAbukarPiecePlacement = (x: number, y: number) => {
     const boxIndex = checkBox(x, y);
-    if (boxIndex !== -1 && board[boxIndex] === null) { // Ensure the box is not occupied
-      const { x: centerX, y: centerY } = centerInBox(boxIndex);
-      const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
-      setClickPosition({
-        ...clickPosition,
-        [pieceKey]: { x: centerX, y: centerY }
-      });
-
-      const newBoard = board.slice();
-      newBoard[boxIndex] = 'transparent-x'; // Mark the box as occupied by abukar
-      setBoard(newBoard);
-      setNextAbukarIndex(nextAbukarIndex + 1);
-    }
-  };
-
-  const handleComputerMove = (currentBoard: (string | null)[]) => {
-    const newBoard = currentBoard.slice();
-    for (let i = 0; i < newBoard.length; i++) {
-      if (newBoard[i] === null) {
-        newBoard[i] = 'o';
-        setBoard(newBoard);
-        setIsXNext(true);
-        break;
+    const winningMove = findWinningMove('transparent-x');
+    if (boxIndex !== -1 && board[boxIndex] === null) {
+      if (winningMove !== -1 && winningMove === boxIndex) {
+        // Place "abukar" in a non-winning square
+        placeAbukarInNonWinningSquare(winningMove);
+      } else {
+        // Place "abukar" in the intended square
+        placeAbukarInSquare(boxIndex);
       }
+    } else if (winningMove !== -1) {
+      // If the intended box is occupied or invalid, and there's a winning move, place in a non-winning square
+      placeAbukarInNonWinningSquare(winningMove);
     }
   };
 
@@ -114,17 +98,91 @@ const TicTacToe: React.FC = () => {
     console.log(`Piece abukar-${nextAbukarIndex} moved to (${adjustedX}, ${adjustedY})`);
   };
 
-  const renderSquare = (index: number) => (
-    <div className="square" onClick={() => handleSquareClick(index)}>
-      {board[index] && (
-        <img
-          src={board[index] === 'o' ? oImage : abukarImage}
-          alt={board[index]}
-          style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
-        />
-      )}
-    </div>
-  );
+  const findWinningMove = (player: string) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (
+        (board[a] === player && board[b] === player && board[c] === null) ||
+        (board[a] === player && board[b] === null && board[c] === player) ||
+        (board[a] === null && board[b] === player && board[c] === player)
+      ) {
+        return board[a] === null ? a : (board[b] === null ? b : c);
+      }
+    }
+    return -1;
+  };
+
+  const placeAbukarInNonWinningSquare = (avoidIndex: number) => {
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null && i !== avoidIndex) {
+        placeAbukarInSquare(i);
+        break;
+      }
+    }
+  };
+
+  const placeAbukarInSquare = (index: number) => {
+    if (board[index] !== null) return; // Prevent move if the square is occupied
+    const { x, y } = centerInBox(index);
+    const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
+    setClickPosition({
+      ...clickPosition,
+      [pieceKey]: { x, y }
+    });
+
+    const newBoard = board.slice();
+    newBoard[index] = 'transparent-x'; // Mark the box as occupied by abukar
+    setBoard(newBoard);
+    setNextAbukarIndex(nextAbukarIndex + 1);
+  };
+
+  const findBestMove = (board: (string | null)[]) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    // Check for a winning move
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (board[a] === 'o' && board[b] === 'o' && board[c] === null) return c;
+      if (board[a] === 'o' && board[b] === null && board[c] === 'o') return b;
+      if (board[a] === null && board[b] === 'o' && board[c] === 'o') return a;
+    }
+
+    // Check for a blocking move
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (board[a] === 'transparent-x' && board[b] === 'transparent-x' && board[c] === null) return c;
+      if (board[a] === 'transparent-x' && board[b] === null && board[c] === 'transparent-x') return b;
+      if (board[a] === null && board[b] === 'transparent-x' && board[c] === 'transparent-x') return a;
+    }
+
+    // Take the first available spot
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        return i;
+      }
+    }
+
+    return -1;
+  };
 
   const calculateWinner = (squares: (string | null)[]) => {
     const lines = [
@@ -146,6 +204,10 @@ const TicTacToe: React.FC = () => {
     return null;
   };
 
+  const isBoardFull = (board: (string | null)[]) => {
+    return board.every((square) => square !== null);
+  };
+
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setNextAbukarIndex(1);
@@ -154,17 +216,45 @@ const TicTacToe: React.FC = () => {
 
   useEffect(() => {
     const winner = calculateWinner(board);
-    if (winner) {
-      if (winner === 'transparent-x') {
-        setXWins(xWins + 1);
-      } else {
-        setOWins(oWins + 1);
+    if (winner || isBoardFull(board)) {
+      if (winner) {
+        if (winner === 'transparent-x') {
+          setXWins(xWins + 1);
+        } else {
+          setOWins(oWins + 1);
+        }
       }
       setTimeout(() => {
         resetGame();
       }, 2000);
+    } else if (!isXNext) {
+      const newBoard = [...board];
+      setTimeout(() => {
+        const bestMove = findBestMove(newBoard);
+        if (bestMove !== -1 && newBoard[bestMove] === null) {
+          setTimeout(() => {
+            if (newBoard[bestMove] === null) {
+              newBoard[bestMove] = 'o';
+              setBoard(newBoard);
+              setIsXNext(true);
+            }
+          }, 1000); // Additional delay before placing "o"
+        }
+      }, 2000); // Delay before computer starts its move
     }
-  }, [board]);
+  }, [board, isXNext]);
+
+  const renderSquare = (index: number) => (
+    <div className="square" onClick={() => handleSquareClick(index)}>
+      {board[index] && (
+        <img
+          src={board[index] === 'o' ? oImage : abukarImage}
+          alt={board[index]}
+          style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
+        />
+      )}
+    </div>
+  );
 
   return (
     <>
