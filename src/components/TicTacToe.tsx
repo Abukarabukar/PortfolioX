@@ -53,6 +53,13 @@ const TicTacToe: React.FC = () => {
     return -1;
   };
 
+  const centerInBox = (index: number) => {
+    const { startX, startY, endX, endY } = boxDimensions[index];
+    const centerX = (startX + endX) / 2;
+    const centerY = (startY + endY) / 2;
+    return { x: centerX - 25, y: centerY - 25 }; // Adjust based on your element size
+  };
+
   const handleSquareClick = (index: number) => {
     const newBoard = board.slice();
     if (newBoard[index]) return;
@@ -67,18 +74,18 @@ const TicTacToe: React.FC = () => {
     const adjustedY = event.clientY - containerRect.top + 25;
 
     if (nextAbukarIndex <= 5) {
-      const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
-      setClickPosition({
-        ...clickPosition,
-        [pieceKey]: { x: adjustedX, y: adjustedY }
-      });
-
       const boxIndex = checkBox(adjustedX, adjustedY);
       if (boxIndex !== -1) {
-        handleSquareClick(boxIndex);
-      }
+        const { x, y } = centerInBox(boxIndex);
+        const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
+        setClickPosition({
+          ...clickPosition,
+          [pieceKey]: { x, y }
+        });
 
-      setNextAbukarIndex(nextAbukarIndex + 1);
+        handleSquareClick(boxIndex);
+        setNextAbukarIndex(nextAbukarIndex + 1);
+      }
     }
     setClickInfo({ x: adjustedX, y: adjustedY });
     console.log(`Piece abukar-${nextAbukarIndex} moved to (${adjustedX}, ${adjustedY})`);
@@ -144,35 +151,35 @@ const TicTacToe: React.FC = () => {
           <div className="side-pieces right">
             <motion.div
               className="animated-box"
-              animate={{ x: clickPosition['abukar-1'].x - 50, y: clickPosition['abukar-1'].y - 50 }}
+              animate={{ x: clickPosition['abukar-1'].x, y: clickPosition['abukar-1'].y }}
               transition={{ duration: 1, ease: 'easeInOut' }}
             >
               <img src={abukarImage} alt="abukar-1" />
             </motion.div>
             <motion.div
               className="animated-box"
-              animate={{ x: clickPosition['abukar-2'].x - 50, y: clickPosition['abukar-2'].y - 50 }}
+              animate={{ x: clickPosition['abukar-2'].x, y: clickPosition['abukar-2'].y }}
               transition={{ duration: 1, ease: 'easeInOut' }}
             >
               <img src={abukarImage} alt="abukar-2" />
             </motion.div>
             <motion.div
               className="animated-box"
-              animate={{ x: clickPosition['abukar-3'].x - 50, y: clickPosition['abukar-3'].y - 50 }}
+              animate={{ x: clickPosition['abukar-3'].x, y: clickPosition['abukar-3'].y }}
               transition={{ duration: 1, ease: 'easeInOut' }}
             >
               <img src={abukarImage} alt="abukar-3" />
             </motion.div>
             <motion.div
               className="animated-box"
-              animate={{ x: clickPosition['abukar-4'].x - 50, y: clickPosition['abukar-4'].y - 50 }}
+              animate={{ x: clickPosition['abukar-4'].x, y: clickPosition['abukar-4'].y }}
               transition={{ duration: 1, ease: 'easeInOut' }}
             >
               <img src={abukarImage} alt="abukar-4" />
             </motion.div>
             <motion.div
               className="animated-box"
-              animate={{ x: clickPosition['abukar-5'].x - 50, y: clickPosition['abukar-5'].y - 50 }}
+              animate={{ x: clickPosition['abukar-5'].x, y: clickPosition['abukar-5'].y }}
               transition={{ duration: 1, ease: 'easeInOut' }}
             >
               <img src={abukarImage} alt="abukar-5" />
