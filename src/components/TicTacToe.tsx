@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/TicTacToe.scss';
-import xImage from '../assets/x.png';
+import abukarImage from '../assets/x.png';
 import oImage from '../assets/o.png';
 import Board from './Board';
 
@@ -10,15 +10,18 @@ const TicTacToe: React.FC = () => {
   const [isXNext, setIsXNext] = useState(true);
   const [xWins, setXWins] = useState(0);
   const [oWins, setOWins] = useState(0);
+  const [bWins, setbWins] = useState(true);
+  const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 });
+  const [clickInfo, setClickInfo] = useState({ x: 0, y: 0 });
 
-  type PieceKey = 'x-1' | 'x-2' | 'x-3' | 'x-4' | 'x-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
+  type PieceKey = 'abukar-1' | 'abukar-2' | 'abukar-3' | 'abukar-4' | 'abukar-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
 
   const initialPositions = {
-    'x-1': { x: 1000, y: 90 },
-    'x-2': { x: 1000, y: 200 },
-    'x-3': { x: 1000, y: 310 },
-    'x-4': { x: 1000, y: 420 },
-    'x-5': { x: 1000, y: 530 },
+    'abukar-1': { x: 1000, y: 90 },
+    'abukar-2': { x: 1000, y: 200 },
+    'abukar-3': { x: 1000, y: 310 },
+    'abukar-4': { x: 1000, y: 420 },
+    'abukar-5': { x: 1000, y: 530 },
     'o-1': { x: 250, y: 90 },
     'o-2': { x: 250, y: 200 },
     'o-3': { x: 250, y: 310 },
@@ -26,7 +29,7 @@ const TicTacToe: React.FC = () => {
   };
 
   const [clickPosition, setClickPosition] = useState<Record<PieceKey, { x: number; y: number }>>(initialPositions);
-  const [nextXIndex, setNextXIndex] = useState(1);
+  const [nextAbukarIndex, setNextAbukarIndex] = useState(1);
 
   const boxDimensions = [
     { startX: 460, startY: 124, endX: 560, endY: 224 },
@@ -63,8 +66,8 @@ const TicTacToe: React.FC = () => {
     const adjustedX = event.clientX - containerRect.left + 25;
     const adjustedY = event.clientY - containerRect.top + 25;
 
-    if (nextXIndex <= 5) {
-      const pieceKey: PieceKey = `x-${nextXIndex}` as PieceKey;
+    if (nextAbukarIndex <= 5) {
+      const pieceKey: PieceKey = `abukar-${nextAbukarIndex}` as PieceKey;
       setClickPosition({
         ...clickPosition,
         [pieceKey]: { x: adjustedX, y: adjustedY }
@@ -75,10 +78,23 @@ const TicTacToe: React.FC = () => {
         handleSquareClick(boxIndex);
       }
 
-      setNextXIndex(nextXIndex + 1);
+      setNextAbukarIndex(nextAbukarIndex + 1);
     }
-    console.log(`Piece x-${nextXIndex} moved to (${adjustedX}, ${adjustedY})`);
+    setClickInfo({ x: adjustedX, y: adjustedY });
+    console.log(`Piece abukar-${nextAbukarIndex} moved to (${adjustedX}, ${adjustedY})`);
   };
+
+  const renderSquare = (index: number) => (
+    <div className="square" onClick={() => handleSquareClick(index)}>
+      {board[index] && (
+        <img
+          src={board[index] === 'o' ? oImage : abukarImage}
+          alt={board[index]}
+          style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
+        />
+      )}
+    </div>
+  );
 
   const calculateWinner = (squares: (string | null)[]) => {
     const lines = [
@@ -102,7 +118,7 @@ const TicTacToe: React.FC = () => {
 
   const resetGame = () => {
     setBoard(Array(9).fill(null));
-    setNextXIndex(1);
+    setNextAbukarIndex(1);
     setClickPosition(initialPositions);
   };
 
@@ -121,54 +137,61 @@ const TicTacToe: React.FC = () => {
   }, [board]);
 
   return (
-    <div className="game" onClick={handleBoardClick}>
-      <Board
-        board={board}
-        onClick={handleSquareClick}
-      />
-      <div className="side-pieces right">
-        <motion.div
-          className="animated-box"
-          animate={{ x: clickPosition['x-1'].x - 50, y: clickPosition['x-1'].y - 50 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        >
-          <img src={xImage} alt="x-1" />
-        </motion.div>
-        <motion.div
-          className="animated-box"
-          animate={{ x: clickPosition['x-2'].x - 50, y: clickPosition['x-2'].y - 50 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        >
-          <img src={xImage} alt="x-2" />
-        </motion.div>
-        <motion.div
-          className="animated-box"
-          animate={{ x: clickPosition['x-3'].x - 50, y: clickPosition['x-3'].y - 50 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        >
-          <img src={xImage} alt="x-3" />
-        </motion.div>
-        <motion.div
-          className="animated-box"
-          animate={{ x: clickPosition['x-4'].x - 50, y: clickPosition['x-4'].y - 50 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        >
-          <img src={xImage} alt="x-4" />
-        </motion.div>
-        <motion.div
-          className="animated-box"
-          animate={{ x: clickPosition['x-5'].x - 50, y: clickPosition['x-5'].y - 50 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        >
-          <img src={xImage} alt="x-5" />
-        </motion.div>
-      </div>
-      <div className="game-info">
-        <div>Next player: {isXNext ? 'X' : 'O'}</div>
-        <div>X Wins: {xWins}</div>
-        <div>O Wins: {oWins}</div>
-      </div>
-    </div>
+    <>
+      {bWins ? (
+        <div className="game" onClick={handleBoardClick} onMouseMove={(e) => setPointerPosition({ x: e.clientX, y: e.clientY })}>
+          <Board board={board} renderSquare={renderSquare} />
+          <div className="side-pieces right">
+            <motion.div
+              className="animated-box"
+              animate={{ x: clickPosition['abukar-1'].x - 50, y: clickPosition['abukar-1'].y - 50 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+              <img src={abukarImage} alt="abukar-1" />
+            </motion.div>
+            <motion.div
+              className="animated-box"
+              animate={{ x: clickPosition['abukar-2'].x - 50, y: clickPosition['abukar-2'].y - 50 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+              <img src={abukarImage} alt="abukar-2" />
+            </motion.div>
+            <motion.div
+              className="animated-box"
+              animate={{ x: clickPosition['abukar-3'].x - 50, y: clickPosition['abukar-3'].y - 50 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+              <img src={abukarImage} alt="abukar-3" />
+            </motion.div>
+            <motion.div
+              className="animated-box"
+              animate={{ x: clickPosition['abukar-4'].x - 50, y: clickPosition['abukar-4'].y - 50 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+              <img src={abukarImage} alt="abukar-4" />
+            </motion.div>
+            <motion.div
+              className="animated-box"
+              animate={{ x: clickPosition['abukar-5'].x - 50, y: clickPosition['abukar-5'].y - 50 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+              <img src={abukarImage} alt="abukar-5" />
+            </motion.div>
+          </div>
+          <div className="game-info">
+            <div>Next player: {isXNext ? 'X' : 'O'}</div>
+            <div>X Wins: {xWins}</div>
+            <div>O Wins: {oWins}</div>
+          </div>
+          <div className="pointer-info">
+            Pointer Position: ({pointerPosition.x}, {pointerPosition.y})
+          </div>
+          <div className="click-info">
+            Last Click Position: ({clickInfo.x}, {clickInfo.y})
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 

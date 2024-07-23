@@ -3,7 +3,7 @@
   width: 100vw; /* Ensure full viewport width */
   height: 100vh; /* Ensure full viewport height */
   position: relative;
-  background-color: #173c10;
+  background-color: #fefffd;
 }
 
 .game-board {
@@ -71,11 +71,43 @@
   font-family: sans-serif;
 }
 
+.pointer-info {
+  bottom: 340px; /* Adjust as needed to prevent overlap */
+}
+
 .click-info {
   bottom: 50px; /* Adjust this value to position it above the pointer-info */
 }
 
 .game-info {
   margin-top: 20px;
-  color: #fff;
+  color: #000; /* Changed to black for better visibility */
+}
+
+@media (max-width: 768px) {
+  .pointer-info,
+  .click-info {
+    bottom: 100px;
+    left: 10px;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .pointer-info {
+    bottom: 150px; /* Adjust as needed to prevent overlap */
+  }
+}
+
+@media (max-width: 480px) {
+  .pointer-info,
+  .click-info {
+    bottom: 50px;
+    left: 5px;
+    padding: 5px;
+    font-size: 10px;
+  }
+
+  .pointer-info {
+    bottom: 90px; /* Adjust as needed to prevent overlap */
+  }
 }
