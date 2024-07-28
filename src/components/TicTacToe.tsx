@@ -13,6 +13,7 @@ const TicTacToe: React.FC = () => {
   const [bWins, setbWins] = useState(true);
   const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 });
   const [clickInfo, setClickInfo] = useState({ x: 0, y: 0 });
+  const [popupMessage, setPopupMessage] = useState<string | null>(null)
 
   type PieceKey = 'abukar-1' | 'abukar-2' | 'abukar-3' | 'abukar-4' | 'abukar-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
 
@@ -75,6 +76,7 @@ const TicTacToe: React.FC = () => {
       if (winningMove !== -1 && winningMove === boxIndex) {
         // Place "abukar" in a non-winning square
         placeAbukarInNonWinningSquare(winningMove);
+        showPopupMessage("Abukar never loses!");
       } else {
         // Place "abukar" in the intended square
         placeAbukarInSquare(boxIndex);
@@ -82,7 +84,13 @@ const TicTacToe: React.FC = () => {
     } else if (winningMove !== -1) {
       // If the intended box is occupied or invalid, and there's a winning move, place in a non-winning square
       placeAbukarInNonWinningSquare(winningMove);
+      showPopupMessage("Abukar never loses!");
     }
+  };
+
+  const showPopupMessage = (message: string) => {
+    setPopupMessage(message);
+    setTimeout(() => setPopupMessage(null), 3000); // Hide message after 3 seconds
   };
 
   const handleBoardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -257,8 +265,8 @@ const TicTacToe: React.FC = () => {
   );
 
   return (
-    <>
-      {bWins ? (
+    
+      
         <div className="game" onClick={handleBoardClick} onMouseMove={(e) => setPointerPosition({ x: e.clientX, y: e.clientY })}>
           <Board board={board} renderSquare={renderSquare} />
           <div className="side-pieces right">
@@ -308,10 +316,16 @@ const TicTacToe: React.FC = () => {
           </div>
           <div className="click-info">
             Last Click Position: ({clickInfo.x}, {clickInfo.y})
+
+         
           </div>
+          {popupMessage && (
+            <div className="popup-message">
+              {popupMessage}
+              </div>
+          )}
         </div>
-      ) : null}
-    </>
+   
   );
 };
 
