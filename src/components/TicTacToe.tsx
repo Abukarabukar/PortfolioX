@@ -21,6 +21,7 @@ const TicTacToe: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [hasMoveMade, setHasMoveMade] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [activePieces, setActivePieces] = useState<number[]>([]);
 
   useEffect(() => {
     audioRef.current = new Audio(laughDogSound);
@@ -76,6 +77,9 @@ const TicTacToe: React.FC = () => {
   };
 
   const handleSquareClick = (index: number) => {
+    if (!gameStarted) {
+      setGameStarted(true);
+    }
     const newBoard = board.slice();
     if (newBoard[index]) return; // Prevent move if the square is occupied
     newBoard[index] = 'transparent-x';
@@ -99,7 +103,9 @@ const TicTacToe: React.FC = () => {
       // If the intended box is occupied or invalid, and there's a winning move, place in a non-winning square
       placeAbukarInNonWinningSquare(winningMove);
       showPopupMessage("Abukar never loses!");
+      
     }
+    setActivePieces(prev => [...prev, nextAbukarIndex]);
   };
 
   const showPopupMessage = (message: string) => {
@@ -236,6 +242,7 @@ const TicTacToe: React.FC = () => {
     setClickPosition(initialPositions);
     setGameStarted(false);
     setHasMoveMade(false);
+    setActivePieces([]);
   };
 
   useEffect(() => {
@@ -284,7 +291,7 @@ const TicTacToe: React.FC = () => {
     <div className="square" onClick={() => handleSquareClick(index)}>
       {board[index] && (
         <img
-          src={board[index] === 'o' ? oImage : (gameStarted ? moonwalkGif : moonwalkStatic)}
+          src={board[index] === 'o' ? oImage : moonwalkGif}
           alt={board[index]}
           className={`${board[index] === 'o' ? 'circular-image' : 'moonwalk-image'} ${hasMoveMade ? 'animate' : ''}`}
           style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
@@ -297,16 +304,17 @@ const TicTacToe: React.FC = () => {
     <div className="game" onClick={handleBoardClick} onMouseMove={(e) => setPointerPosition({ x: e.clientX, y: e.clientY })}>
       <Board board={board} renderSquare={renderSquare} />
       <div className="side-pieces right">
-      {(['abukar-1', 'abukar-2', 'abukar-3', 'abukar-4', 'abukar-5'] as PieceKey[]).map((pieceKey) => (          <motion.div
+        {(['abukar-1', 'abukar-2', 'abukar-3', 'abukar-4', 'abukar-5'] as PieceKey[]).map((pieceKey, index) => (
+          <motion.div
             key={pieceKey}
             className="animated-box"
             animate={{ x: clickPosition[pieceKey].x, y: clickPosition[pieceKey].y }}
             transition={{ duration: 1, ease: 'easeInOut' }}
           >
             <img 
-              src={gameStarted ? moonwalkGif : moonwalkStatic} 
+              src={activePieces.includes(index + 1) ? moonwalkGif : moonwalkStatic} 
               alt={pieceKey} 
-              className="moonwalk-gif" 
+              className="moonwalk-image" 
             />
           </motion.div>
         ))}
