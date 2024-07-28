@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/TicTacToe.scss';
 import abukarImage from '../assets/x.png';
 import oImage from '../assets/o.png';
 import Board from './Board';
+import laughDogGif from '../assets/laugh-dog.gif';
+import laughDogSound from '../assets/laugh-dog.mp3';
 
 const TicTacToe: React.FC = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -14,6 +16,12 @@ const TicTacToe: React.FC = () => {
   const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 });
   const [clickInfo, setClickInfo] = useState({ x: 0, y: 0 });
   const [popupMessage, setPopupMessage] = useState<string | null>(null)
+  const [showLoseGif, setShowLoseGif] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio(laughDogSound);
+  }, []);
 
   type PieceKey = 'abukar-1' | 'abukar-2' | 'abukar-3' | 'abukar-4' | 'abukar-5' | 'o-1' | 'o-2' | 'o-3' | 'o-4';
 
@@ -230,6 +238,18 @@ const TicTacToe: React.FC = () => {
           setXWins(xWins + 1);
         } else {
           setOWins(oWins + 1);
+          showPopupMessage("Loooooooser");
+          setShowLoseGif(true);
+          if (audioRef.current) {
+            audioRef.current.play();
+          }
+          setTimeout(() => {
+            setShowLoseGif(false);
+            if (audioRef.current) {
+              audioRef.current.pause();
+              audioRef.current.currentTime = 0;
+            }
+          }, 5000);
         }
       }
       setTimeout(() => {
@@ -323,6 +343,12 @@ const TicTacToe: React.FC = () => {
             <div className="popup-message">
               {popupMessage}
               </div>
+          )}
+
+{showLoseGif && (
+            <div className="lose-gif">
+              <img src={laughDogGif} alt="Laughing dog" />
+            </div>
           )}
         </div>
    

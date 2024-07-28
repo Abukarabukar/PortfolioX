@@ -131,3 +131,24 @@
   0%, 100% { opacity: 0; }
   10%, 90% { opacity: 1; }
 }
+
+
+.lose-gif {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); // 50% opacity black background
+  z-index: 1000;
+
+  img {
+    width: 80vw; // 80% of the viewport width
+    height: 80vh; // 80% of the viewport height
+    object-fit: contain; // This ensures the aspect ratio is maintained
+    opacity: 0.5; // 50% opacity for the GIF
+  }
+}
