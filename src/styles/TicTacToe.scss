@@ -84,6 +84,13 @@
   color: #000; /* Changed to black for better visibility */
 }
 
+img.moonwalk-gif {
+  width: 300%; // Increased from 80% to 100%
+  height: 300%; // Increased from 80% to 100%
+  object-fit: contain; // This ensures the entire GIF is visible
+}
+
+
 @media (max-width: 768px) {
   .pointer-info,
   .click-info {
@@ -95,6 +102,11 @@
 
   .pointer-info {
     bottom: 150px; /* Adjust as needed to prevent overlap */
+  }
+
+  img.circular-image {
+    width: 80%; // Adjust this value to control the size of the circle within the square
+    height: 80%; // Keep it equal to width for a perfect circle
   }
 }
 
@@ -152,3 +164,26 @@
     opacity: 0.5; // 50% opacity for the GIF
   }
 }
+
+
+.circular-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+.moonwalk-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  mix-blend-mode: multiply; // This will help blend the white background
+  
+  &.animate {
+    animation: startGif 0.1s forwards;
+  }
+}
+

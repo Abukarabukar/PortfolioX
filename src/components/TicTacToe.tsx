@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/TicTacToe.scss';
-import abukarImage from '../assets/x.png';
-import oImage from '../assets/o.png';
+import moonwalkGif from '../assets/moonwalk.gif';
+import oImage from '../assets/myPhoto.jpg';
 import Board from './Board';
 import laughDogGif from '../assets/laugh-dog.gif';
 import laughDogSound from '../assets/laugh-dog.mp3';
+import moonwalkStatic from '../assets/moonwalk-static.png';
 
 const TicTacToe: React.FC = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -18,6 +19,8 @@ const TicTacToe: React.FC = () => {
   const [popupMessage, setPopupMessage] = useState<string | null>(null)
   const [showLoseGif, setShowLoseGif] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [hasMoveMade, setHasMoveMade] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio(laughDogSound);
@@ -63,6 +66,9 @@ const TicTacToe: React.FC = () => {
   };
 
   const centerInBox = (index: number) => {
+    if (!gameStarted) {
+      setGameStarted(true);
+    }
     const { startX, startY, endX, endY } = boxDimensions[index];
     const centerX = (startX + endX) / 2;
     const centerY = (startY + endY) / 2;
@@ -228,6 +234,8 @@ const TicTacToe: React.FC = () => {
     setBoard(Array(9).fill(null));
     setNextAbukarIndex(1);
     setClickPosition(initialPositions);
+    setGameStarted(false);
+    setHasMoveMade(false);
   };
 
   useEffect(() => {
@@ -276,8 +284,9 @@ const TicTacToe: React.FC = () => {
     <div className="square" onClick={() => handleSquareClick(index)}>
       {board[index] && (
         <img
-          src={board[index] === 'o' ? oImage : abukarImage}
+          src={board[index] === 'o' ? oImage : (gameStarted ? moonwalkGif : moonwalkStatic)}
           alt={board[index]}
+          className={`${board[index] === 'o' ? 'circular-image' : 'moonwalk-image'} ${hasMoveMade ? 'animate' : ''}`}
           style={board[index] === 'transparent-x' ? { opacity: 0 } : {}}
         />
       )}
@@ -285,73 +294,45 @@ const TicTacToe: React.FC = () => {
   );
 
   return (
-    
-      
-        <div className="game" onClick={handleBoardClick} onMouseMove={(e) => setPointerPosition({ x: e.clientX, y: e.clientY })}>
-          <Board board={board} renderSquare={renderSquare} />
-          <div className="side-pieces right">
-            <motion.div
-              className="animated-box"
-              animate={{ x: clickPosition['abukar-1'].x, y: clickPosition['abukar-1'].y }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-            >
-              <img src={abukarImage} alt="abukar-1" />
-            </motion.div>
-            <motion.div
-              className="animated-box"
-              animate={{ x: clickPosition['abukar-2'].x, y: clickPosition['abukar-2'].y }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-            >
-              <img src={abukarImage} alt="abukar-2" />
-            </motion.div>
-            <motion.div
-              className="animated-box"
-              animate={{ x: clickPosition['abukar-3'].x, y: clickPosition['abukar-3'].y }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-            >
-              <img src={abukarImage} alt="abukar-3" />
-            </motion.div>
-            <motion.div
-              className="animated-box"
-              animate={{ x: clickPosition['abukar-4'].x, y: clickPosition['abukar-4'].y }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-            >
-              <img src={abukarImage} alt="abukar-4" />
-            </motion.div>
-            <motion.div
-              className="animated-box"
-              animate={{ x: clickPosition['abukar-5'].x, y: clickPosition['abukar-5'].y }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-            >
-              <img src={abukarImage} alt="abukar-5" />
-            </motion.div>
-          </div>
-          <div className="game-info">
-            <div>Next player: {isXNext ? 'X' : 'O'}</div>
-            <div>X Wins: {xWins}</div>
-            <div>O Wins: {oWins}</div>
-          </div>
-          <div className="pointer-info">
-            Pointer Position: ({pointerPosition.x}, {pointerPosition.y})
-          </div>
-          <div className="click-info">
-            Last Click Position: ({clickInfo.x}, {clickInfo.y})
-
-         
-          </div>
-          {popupMessage && (
-            <div className="popup-message">
-              {popupMessage}
-              </div>
-          )}
-
-{showLoseGif && (
-            <div className="lose-gif">
-              <img src={laughDogGif} alt="Laughing dog" />
-            </div>
-          )}
+    <div className="game" onClick={handleBoardClick} onMouseMove={(e) => setPointerPosition({ x: e.clientX, y: e.clientY })}>
+      <Board board={board} renderSquare={renderSquare} />
+      <div className="side-pieces right">
+      {(['abukar-1', 'abukar-2', 'abukar-3', 'abukar-4', 'abukar-5'] as PieceKey[]).map((pieceKey) => (          <motion.div
+            key={pieceKey}
+            className="animated-box"
+            animate={{ x: clickPosition[pieceKey].x, y: clickPosition[pieceKey].y }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
+          >
+            <img 
+              src={gameStarted ? moonwalkGif : moonwalkStatic} 
+              alt={pieceKey} 
+              className="moonwalk-gif" 
+            />
+          </motion.div>
+        ))}
+      </div>
+      <div className="game-info">
+        <div>Next player: {isXNext ? 'X' : 'O'}</div>
+        <div>User Wins: {xWins}</div>
+        <div>Abukar Wins: {oWins}</div>
+      </div>
+      <div className="pointer-info">
+        Pointer Position: ({pointerPosition.x}, {pointerPosition.y})
+      </div>
+      <div className="click-info">
+        Last Click Position: ({clickInfo.x}, {clickInfo.y})
+      </div>
+      {popupMessage && (
+        <div className="popup-message">
+          {popupMessage}
         </div>
-   
+      )}
+      {showLoseGif && (
+        <div className="lose-gif">
+          <img src={laughDogGif} alt="Laughing dog" />
+        </div>
+      )}
+    </div>
   );
 };
 
