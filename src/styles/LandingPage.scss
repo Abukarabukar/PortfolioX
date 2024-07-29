@@ -22,7 +22,7 @@
     justify-content: center;
     height: 100%;
     text-align: center;
-    background-color: rgba(240, 240, 240, 0.7); // semi-transparent overlay
+    background-color: rgba(240, 240, 240, 0.7);
     padding: 2rem;
   }
 
@@ -74,33 +74,29 @@
     }
   }
 
-  
-    // ... (previous styles remain unchanged)
-  
-    .music-toggle-btn {
-      position: absolute;
-      bottom: 650px;
-      right: 5px;
+  .music-toggle-btn {
+    position: absolute;
+    bottom: 650px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .music-icon {
       width: 30px;
       height: 30px;
-      padding: 5px;
-      cursor: pointer;
-      background-color: rgba(255, 255, 255, 0.2);
-      border: none;
-      border-radius: 50%;
-      transition: background-color 0.3s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-  
-      .music-icon {
-      width: 30px;  // Adjusted size
-      height: 30px; // Adjusted size
     }
-    }
-  
+  }
 }

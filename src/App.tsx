@@ -9,7 +9,7 @@ const App: React.FC = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/tictactoe" element={<TicTacToe />} />
+        <Route path="/game" element={<TicTacToe />} />
       </Routes>
     </div>
   );
