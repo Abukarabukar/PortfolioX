@@ -100,9 +100,18 @@ const LandingPage: React.FC = () => {
               <FlipWords words={quoteWords} duration={2000} className="text-2xl font-bold" />
             </div>
             <div className="icon-container">
-              <img src={seeIcon} alt="See" className="icon" onClick={toggleVideo} />
-              <img src={hearIcon} alt="Hear" className="icon" onClick={toggleMusic} />
-              <img src={speakIcon} alt="Speak" className="icon" onClick={goToGame} />
+              <div className="icon-wrapper">
+                <img src={seeIcon} alt="See" className="icon" onClick={toggleVideo} />
+                <span className="tooltip">Stop the video</span>
+              </div>
+              <div className="icon-wrapper">
+                <img src={hearIcon} alt="Hear" className="icon" onClick={toggleMusic} />
+                <span className="tooltip">Stop the music</span>
+              </div>
+              <div className="icon-wrapper">
+                <img src={speakIcon} alt="Speak" className="icon" onClick={goToGame} />
+                <span className="tooltip">Are you board?</span>
+              </div>
             </div>
           </div>
         </div>
