@@ -52,51 +52,21 @@
     justify-content: center;
   }
 
-  .question {
-    font-size: 1.25rem;
-    color: #666;
-    margin-bottom: 1rem;
-  }
-
-  .start-game-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #0077cc;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #005fa3;
-    }
-  }
-
-  .music-toggle-btn {
-    position: absolute;
-    bottom: 650px;
-    right: 5px;
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
+  .icon-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 8rem; // Increased from 2rem to 4rem
+    margin-top: 2rem;
+  }
+
+  .icon {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .music-icon {
-      width: 30px;
-      height: 30px;
+      transform: scale(1.1);
     }
   }
 }

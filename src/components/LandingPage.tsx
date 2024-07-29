@@ -1,18 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/LandingPage.scss';
 import myPhoto from '../assets/myPhoto.jpg';
 import { FlipWords } from './FlipWords';
 import backgroundVideo from '../assets/4k.mp4';
 import backgroundMusic from '../assets/Dream.mp3';
-import playIcon from '../assets/play.png';
-import pauseIcon from '../assets/pause.png';
+import seeIcon from '../assets/see.png';
+import hearIcon from '../assets/hear.png';
+import speakIcon from '../assets/speak.png';
 import WaterWave from 'react-water-wave';
 
 const LandingPage: React.FC = () => {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const navigate = useNavigate();
 
   const quoteWords = [
     "chase",
@@ -38,7 +42,7 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.5; // Set volume to 50%
+      audioRef.current.volume = 0.5;
     }
   }, []);
 
@@ -53,18 +57,33 @@ const LandingPage: React.FC = () => {
     }
   };
 
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  const goToGame = () => {
+    navigate('/game');
+  };
+
   return (
     <WaterWave
-     imageUrl={backgroundVideo}
+      imageUrl={backgroundVideo}
       style={{ width: '100%', height: '100vh' }}
-      dropRadius={10}     // Changed from 20 to 50: Increases the size of each water drop, creating larger waves
-      perturbance={0.05}  // Changed from 0.01 to 0.05: Increases the intensity of the waves, making them more visible
-      resolution={256}    // Added: Increases the detail of the water effect (higher values = more detail but may impact performance)
+      dropRadius={10}
+      perturbance={0.05}
+      resolution={256}
       interactive={true}
     >
       {() => (
         <div className="landing-page">
-          <video autoPlay loop muted className="background-video">
+          <video ref={videoRef} autoPlay loop muted className="background-video">
             <source src={backgroundVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -80,15 +99,11 @@ const LandingPage: React.FC = () => {
               <span className="static-text">I will</span>&nbsp;
               <FlipWords words={quoteWords} duration={2000} className="text-2xl font-bold" />
             </div>
-            <p className="question">Are you bored now?</p>
-            <Link to="/game" className="start-game-btn">I am board</Link>
-            <button onClick={toggleMusic} className="music-toggle-btn">
-              <img 
-                src={isMusicPlaying ? pauseIcon : playIcon} 
-                alt={isMusicPlaying ? "Pause" : "Play"} 
-                className="music-icon"
-              />
-            </button>
+            <div className="icon-container">
+              <img src={seeIcon} alt="See" className="icon" onClick={toggleVideo} />
+              <img src={hearIcon} alt="Hear" className="icon" onClick={toggleMusic} />
+              <img src={speakIcon} alt="Speak" className="icon" onClick={goToGame} />
+            </div>
           </div>
         </div>
       )}
