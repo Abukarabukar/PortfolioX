@@ -72,6 +72,10 @@ const LandingPage: React.FC = () => {
     navigate('/game');
   };
 
+  const goToProfile = () => {
+    navigate('/profile');
+  };
+
   return (
     <WaterWave
       imageUrl={backgroundVideo}
@@ -83,6 +87,7 @@ const LandingPage: React.FC = () => {
     >
       {() => (
         <div className="landing-page">
+          <div className="video-overlay"></div>
           <video ref={videoRef} autoPlay loop muted className="background-video">
             <source src={backgroundVideo} type="video/mp4" />
             Your browser does not support the video tag.
@@ -97,20 +102,24 @@ const LandingPage: React.FC = () => {
             </div>
             <div className="quote">
               <span className="static-text">I will</span>&nbsp;
-              <FlipWords words={quoteWords} duration={2000} className="text-2xl font-bold" />
+              <FlipWords words={quoteWords} duration={2000} className="flip-words" />
             </div>
             <div className="icon-container">
               <div className="icon-wrapper">
                 <img src={seeIcon} alt="See" className="icon" onClick={toggleVideo} />
-                <span className="tooltip">Stop the video</span>
+                <span className="tooltip">Toggle video</span>
               </div>
               <div className="icon-wrapper">
                 <img src={hearIcon} alt="Hear" className="icon" onClick={toggleMusic} />
-                <span className="tooltip">Stop the music</span>
+                <span className="tooltip">Toggle music</span>
               </div>
               <div className="icon-wrapper">
                 <img src={speakIcon} alt="Speak" className="icon" onClick={goToGame} />
-                <span className="tooltip">Are you board?</span>
+                <span className="tooltip">Play game</span>
+              </div>
+              <div className="icon-wrapper">
+                <img src={seeIcon} alt="See" className="icon" onClick={goToProfile} />
+                <span className="tooltip">View Profile</span>
               </div>
             </div>
           </div>

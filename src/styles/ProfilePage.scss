@@ -1,0 +1,213 @@
+$primary-cyan: #00ffff;
+$dark-background: #0a0e14;
+$text-color: #e0e0e0;
+$accent-color: #005a5a;
+
+.landing-page {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  color: $text-color;
+  font-family: Arial, sans-serif;
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($dark-background, 0.7);
+    z-index: 1;
+  }
+
+  .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .photo-container {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 30px rgba($primary-cyan, 0.5);
+    border: 3px solid $primary-cyan;
+  }
+
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .quote {
+    font-size: 2.5rem;
+    font-style: italic;
+    color: $primary-cyan;
+    margin-bottom: 3rem;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .static-text {
+      margin-right: 0.75rem;
+    }
+
+    .flip-words {
+      color: $primary-cyan;
+      font-weight: bold;
+      text-shadow: 0 0 15px rgba($primary-cyan, 0.6);
+    }
+  }
+
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    gap: 8rem;
+    margin-top: 4rem;
+  }
+
+  .icon-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .icon {
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: invert(1) hue-rotate(180deg);
+
+    &:hover {
+      transform: scale(1.15);
+      filter: invert(1) hue-rotate(180deg) drop-shadow(0 0 8px $primary-cyan);
+    }
+  }
+
+  .tooltip {
+    visibility: hidden;
+    width: 160px;
+    background-color: $accent-color;
+    color: $text-color;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 135%;
+    left: 50%;
+    margin-left: -80px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 16px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -6px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: $accent-color transparent transparent transparent;
+    }
+  }
+
+  .icon-wrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+// Ensure the WaterWave component covers the entire viewport
+div[style*="position: relative; width: 100%; height: 100vh;"] {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 1024px) {
+  .landing-page {
+    .photo-container {
+      width: 250px;
+      height: 250px;
+    }
+
+    .quote {
+      font-size: 2rem;
+    }
+
+    .icon-container {
+      gap: 6rem;
+    }
+
+    .icon {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-page {
+    .photo-container {
+      width: 200px;
+      height: 200px;
+    }
+
+    .quote {
+      font-size: 1.8rem;
+    }
+
+    .icon-container {
+      gap: 4rem;
+    }
+    
+    .icon {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-page {
+    .photo-container {
+      width: 150px;
+      height: 150px;
+    }
+
+    .quote {
+      font-size: 1.5rem;
+    }
+
+    .icon-container {
+      gap: 2rem;
+    }
+    
+    .icon {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
