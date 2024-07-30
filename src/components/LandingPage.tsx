@@ -3,19 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/LandingPage.scss';
 import myPhoto from '../assets/myPhoto.jpg';
 import { FlipWords } from './FlipWords';
-import backgroundVideo from '../assets/4k.mp4';
+import backgroundGif from '../assets/4k.gif';
 import backgroundMusic from '../assets/Dream.mp3';
 import seeIcon from '../assets/see.png';
 import hearIcon from '../assets/hear.png';
 import speakIcon from '../assets/speak.png';
-import WaterWave from 'react-water-wave';
+import { Lightning } from './Lightning';
+import { Vector } from './Vector';
 
 const LandingPage: React.FC = () => {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [lightningEnd, setLightningEnd] = useState<Vector | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const photoRef = useRef<HTMLImageElement>(null);
+  const lightningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
 
   const quoteWords = [
@@ -46,6 +49,73 @@ const LandingPage: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      console.error("Canvas not found");
+      return;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error("Could not get 2D context");
+      return;
+    }
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const lt = new Lightning({
+      Segments: 50,
+      Threshold: 1,
+      Width: 8,
+      Color: '#00FFFF',
+      Blur: 20,
+      BlurColor: '#00FFFF',
+      Alpha: 1,
+      GlowColor: '#0000FF',
+      GlowWidth: 200,
+      GlowBlur: 300,
+      GlowAlpha: 0.7,
+    });
+
+    const renderLightning = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (photoRef.current && lightningEnd) {
+        const rect = photoRef.current.getBoundingClientRect();
+        const photoCenter = new Vector(0, 0, rect.left + rect.width / 2, rect.top + rect.height / 2);
+        lt.Cast(ctx, photoCenter, lightningEnd);
+      }
+      requestAnimationFrame(renderLightning);
+    };
+
+    renderLightning();
+
+    const handleClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setLightningEnd(new Vector(0, 0, x, y));
+
+      if (lightningTimeoutRef.current) {
+        clearTimeout(lightningTimeoutRef.current);
+      }
+      
+      lightningTimeoutRef.current = setTimeout(() => {
+        setLightningEnd(null);
+      }, 500);
+    };
+
+    // Add the click event listener to the entire window instead of just the canvas
+    window.addEventListener('click', handleClick);
+
+    return () => {
+      window.removeEventListener('click', handleClick);
+      if (lightningTimeoutRef.current) {
+        clearTimeout(lightningTimeoutRef.current);
+      }
+    };
+  }, [lightningEnd]);
+
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isMusicPlaying) {
@@ -57,67 +127,42 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isVideoPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsVideoPlaying(!isVideoPlaying);
-    }
-  };
-
   return (
-    <WaterWave
-      imageUrl={backgroundVideo}
-      style={{ width: '100%', height: '100vh' }}
-      dropRadius={10}
-      perturbance={0.05}
-      resolution={256}
-      interactive={true}
-    >
-      {() => (
-        <div className="landing-page">
-          <div className="video-overlay"></div>
-          <video ref={videoRef} autoPlay loop muted className="background-video">
-            <source src={backgroundVideo} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          <audio ref={audioRef} loop muted>
-            <source src={backgroundMusic} type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-          <div className="content">
-            <div className="photo-container">
-              <img src={myPhoto} alt="Abukar" className="profile-photo" />
-            </div>
-            <div className="quote">
-              <span className="static-text">I will</span>&nbsp;
-              <FlipWords words={quoteWords} duration={2000} className="flip-words" />
-            </div>
-            <div className="icon-container">
-              <div className="icon-wrapper">
-                <img src={seeIcon} alt="See" className="icon" onClick={toggleVideo} />
-                <span className="tooltip">Toggle video</span>
-              </div>
-              <div className="icon-wrapper">
-                <img src={hearIcon} alt="Hear" className="icon" onClick={toggleMusic} />
-                <span className="tooltip">Toggle music</span>
-              </div>
-              <div className="icon-wrapper">
-                <img src={speakIcon} alt="Speak" className="icon" onClick={() => navigate('/game')} />
-                <span className="tooltip">Play game</span>
-              </div>
-              <div className="icon-wrapper">
-                <img src={seeIcon} alt="See" className="icon" onClick={() => navigate('/profile')} />
-                <span className="tooltip">View Profile</span>
-              </div>
-            </div>
+    <div className="landing-page">
+      <div className="video-overlay"></div>
+      <img src={backgroundGif} alt="Background" className="background-gif" />
+      <audio ref={audioRef} loop muted>
+        <source src={backgroundMusic} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <canvas 
+        ref={canvasRef} 
+        className="lightning-canvas"
+      />
+      <div className="content">
+        <div className="photo-container">
+          <img ref={photoRef} src={myPhoto} alt="Abukar" className="profile-photo" />
+        </div>
+        <div className="quote">
+          <span className="static-text">I will</span>&nbsp;
+          <FlipWords words={quoteWords} duration={2000} className="flip-words" />
+        </div>
+        <div className="icon-container">
+          <div className="icon-wrapper">
+            <img src={seeIcon} alt="See" className="icon" onClick={() => navigate('/profile')} />
+            <span className="tooltip">View Profile</span>
+          </div>
+          <div className="icon-wrapper">
+            <img src={hearIcon} alt="Hear" className="icon" onClick={toggleMusic} />
+            <span className="tooltip">Toggle music</span>
+          </div>
+          <div className="icon-wrapper">
+            <img src={speakIcon} alt="Speak" className="icon" onClick={() => navigate('/game')} />
+            <span className="tooltip">Play game</span>
           </div>
         </div>
-      )}
-    </WaterWave>
+      </div>
+    </div>
   );
 };
 
