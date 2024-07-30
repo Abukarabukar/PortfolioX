@@ -14,11 +14,12 @@ import { Vector } from './Vector';
 const LandingPage: React.FC = () => {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [lightningStart, setLightningStart] = useState<Vector | null>(null);
   const [lightningEnd, setLightningEnd] = useState<Vector | null>(null);
+  const [showLightning, setShowLightning] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const photoRef = useRef<HTMLImageElement>(null);
-  const lightningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
 
   const quoteWords = [
@@ -28,38 +29,11 @@ const LandingPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    const handleInteraction = () => {
-      if (!hasInteracted && audioRef.current) {
-        audioRef.current.muted = false;
-        audioRef.current.play().catch(error => console.error("Autoplay failed:", error));
-        setIsMusicPlaying(true);
-        setHasInteracted(true);
-      }
-    };
-
-    document.addEventListener('click', handleInteraction);
-    return () => {
-      document.removeEventListener('click', handleInteraction);
-    };
-  }, [hasInteracted]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.5;
-    }
-  }, []);
-
-  useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      console.error("Canvas not found");
-      return;
-    }
+    if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      console.error("Could not get 2D context");
-      return;
-    }
+    if (!ctx) return;
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -80,10 +54,8 @@ const LandingPage: React.FC = () => {
 
     const renderLightning = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (photoRef.current && lightningEnd) {
-        const rect = photoRef.current.getBoundingClientRect();
-        const photoCenter = new Vector(0, 0, rect.left + rect.width / 2, rect.top + rect.height / 2);
-        lt.Cast(ctx, photoCenter, lightningEnd);
+      if (showLightning && photoRef.current && lightningStart && lightningEnd) {
+        lt.Cast(ctx, lightningStart, lightningEnd);
       }
       requestAnimationFrame(renderLightning);
     };
@@ -91,30 +63,40 @@ const LandingPage: React.FC = () => {
     renderLightning();
 
     const handleClick = (e: MouseEvent) => {
+      if (!photoRef.current) return;
+
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      setLightningEnd(new Vector(0, 0, x, y));
 
-      if (lightningTimeoutRef.current) {
-        clearTimeout(lightningTimeoutRef.current);
-      }
-      
-      lightningTimeoutRef.current = setTimeout(() => {
-        setLightningEnd(null);
-      }, 500);
+      const photoRect = photoRef.current.getBoundingClientRect();
+      const photoCenter = new Vector(
+        0, 0,
+        photoRect.left + photoRect.width / 2 - rect.left,
+        photoRect.top + photoRect.height / 2 - rect.top
+      );
+
+      setLightningStart(photoCenter);
+      setLightningEnd(new Vector(0, 0, x, y));
+      setShowLightning(true);
     };
 
-    // Add the click event listener to the entire window instead of just the canvas
     window.addEventListener('click', handleClick);
 
     return () => {
       window.removeEventListener('click', handleClick);
-      if (lightningTimeoutRef.current) {
-        clearTimeout(lightningTimeoutRef.current);
-      }
     };
-  }, [lightningEnd]);
+  }, [showLightning]);
+
+  useEffect(() => {
+    if (showLightning) {
+      const timer = setTimeout(() => {
+        setShowLightning(false);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showLightning]);
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -129,20 +111,20 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="landing-page">
-      <div className="video-overlay"></div>
-      <img src={backgroundGif} alt="Background" className="background-gif" />
-      <audio ref={audioRef} loop muted>
-        <source src={backgroundMusic} type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-      <canvas 
-        ref={canvasRef} 
-        className="lightning-canvas"
-      />
-      <div className="content">
-        <div className="photo-container">
-          <img ref={photoRef} src={myPhoto} alt="Abukar" className="profile-photo" />
-        </div>
+    <div className="video-overlay"></div>
+    <img src={backgroundGif} alt="Background" className="background-gif" />
+    <audio ref={audioRef} loop muted>
+      <source src={backgroundMusic} type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <canvas 
+      ref={canvasRef} 
+      className="lightning-canvas"
+    />
+    <div className="content">
+      <div className="photo-container">
+        <img ref={photoRef} src={myPhoto} alt="Abukar" className="profile-photo" />
+      </div>
         <div className="quote">
           <span className="static-text">I will</span>&nbsp;
           <FlipWords words={quoteWords} duration={2000} className="flip-words" />
