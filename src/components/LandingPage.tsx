@@ -17,6 +17,8 @@ const LandingPage: React.FC = () => {
   const [lightningStart, setLightningStart] = useState<Vector | null>(null);
   const [lightningEnd, setLightningEnd] = useState<Vector | null>(null);
   const [showLightning, setShowLightning] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [lastInteraction, setLastInteraction] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const photoRef = useRef<HTMLImageElement>(null);
@@ -62,7 +64,7 @@ const LandingPage: React.FC = () => {
 
     renderLightning();
 
-    const handleClick = (e: MouseEvent) => {
+    const updateLightning = (e: MouseEvent) => {
       if (!photoRef.current) return;
 
       const rect = canvas.getBoundingClientRect();
@@ -79,24 +81,46 @@ const LandingPage: React.FC = () => {
       setLightningStart(photoCenter);
       setLightningEnd(new Vector(0, 0, x, y));
       setShowLightning(true);
+      setLastInteraction(Date.now());
     };
 
-    window.addEventListener('click', handleClick);
+    const handleMouseDown = (e: MouseEvent) => {
+      setIsMouseDown(true);
+      updateLightning(e);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isMouseDown) {
+        updateLightning(e);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsMouseDown(false);
+      setLastInteraction(Date.now());
+    };
+
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      window.removeEventListener('click', handleClick);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [showLightning]);
+  }, [isMouseDown, showLightning, lightningStart, lightningEnd]);
 
   useEffect(() => {
-    if (showLightning) {
+    if (!isMouseDown && lastInteraction) {
       const timer = setTimeout(() => {
         setShowLightning(false);
+        console.log('Lightning cleared'); // Debug log
       }, 500);
 
       return () => clearTimeout(timer);
     }
-  }, [showLightning]);
+  }, [isMouseDown, lastInteraction]);
 
   const toggleMusic = () => {
     if (audioRef.current) {
