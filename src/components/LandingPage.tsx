@@ -68,14 +68,6 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  const goToGame = () => {
-    navigate('/game');
-  };
-
-  const goToProfile = () => {
-    navigate('/profile');
-  };
-
   return (
     <WaterWave
       imageUrl={backgroundVideo}
@@ -114,11 +106,11 @@ const LandingPage: React.FC = () => {
                 <span className="tooltip">Toggle music</span>
               </div>
               <div className="icon-wrapper">
-                <img src={speakIcon} alt="Speak" className="icon" onClick={goToGame} />
+                <img src={speakIcon} alt="Speak" className="icon" onClick={() => navigate('/game')} />
                 <span className="tooltip">Play game</span>
               </div>
               <div className="icon-wrapper">
-                <img src={seeIcon} alt="See" className="icon" onClick={goToProfile} />
+                <img src={seeIcon} alt="See" className="icon" onClick={() => navigate('/profile')} />
                 <span className="tooltip">View Profile</span>
               </div>
             </div>

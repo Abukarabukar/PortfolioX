@@ -1,3 +1,4 @@
+// Define color variables directly in this file
 $primary-cyan: #00ffff;
 $dark-background: #0a0e14;
 $text-color: #e0e0e0;
@@ -5,148 +6,109 @@ $accent-color: #005a5a;
 
 .landing-page {
   position: relative;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $dark-background;
   color: $text-color;
-  font-family: Arial, sans-serif;
+}
 
-  .video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba($dark-background, 0.7);
-    z-index: 1;
-  }
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
 
-  .background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  }
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
 
-  .content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 2rem;
-  }
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
 
-  .photo-container {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    box-shadow: 0 0 20px rgba($primary-cyan, 0.5);
-    border: 2px solid $primary-cyan;
-  }
+.photo-container {
+  margin-bottom: 2rem;
+}
 
-  .profile-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid $primary-cyan;
+  box-shadow: 0 0 20px $primary-cyan;
+}
 
-  .quote {
-    font-size: 1.5rem;
-    font-style: italic;
-    color: $primary-cyan;
-    margin-bottom: 2rem;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.quote {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    .static-text {
-      margin-right: 0.5rem;
-    }
-
-    .flip-words {
-      color: $primary-cyan;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba($primary-cyan, 0.5);
-    }
-  }
-
-  .icon-container {
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    margin-top: 2rem;
-  }
-
-  .icon-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-
-  .icon {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    filter: invert(1) hue-rotate(180deg); // This will make icons cyan
-
-    &:hover {
-      transform: scale(1.1);
-      filter: invert(1) hue-rotate(180deg) drop-shadow(0 0 5px $primary-cyan);
-    }
-  }
-
-  .tooltip {
-    visibility: hidden;
-    width: 120px;
-    background-color: $accent-color;
+  .static-text {
     color: $text-color;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: $accent-color transparent transparent transparent;
-    }
   }
 
-  .icon-wrapper:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
+  .flip-words {
+    color: $primary-cyan;
+    font-weight: bold;
+    margin-left: 0.5rem;
   }
 }
 
-@media (max-width: 768px) {
-  .landing-page {
-    .icon-container {
-      gap: 2rem;
-    }
-    
-    .icon {
-      width: 40px;
-      height: 40px;
-    }
+.icon-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.icon-wrapper {
+  position: relative;
+  cursor: pointer;
+
+  &:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background-color: $accent-color;
+  color: $text-color;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
 }
