@@ -39,6 +39,7 @@ $accent-color: #005a5a;
         }
       }
     }
+    
   }
 
   .main-content {
@@ -66,7 +67,7 @@ $accent-color: #005a5a;
       background-color: rgba($dark-background, 0.7);
       border-radius: 10px;
       padding: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: -2rem;
 
       .profile-image {
         width: 100px;
@@ -106,7 +107,7 @@ $accent-color: #005a5a;
     }
 
     .bio {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       line-height: 1.6;
       background-color: rgba($accent-color, 0.1);
       padding: 1rem;

@@ -11,14 +11,15 @@ const ProfilePage: React.FC = () => {
         <div className="logo">A</div>
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/blog">Blog</Link>
-          <Link to="/guestbook">Guestbook</Link>
+          <Link to="/about">Posts</Link>
+          <Link to="/blog">Projects</Link>
+          <Link to="/guestbook">Feedback</Link>
+          <Link to="/Feedback">Certifications</Link>
         </nav>
       </div>
       <div className="main-content">
         <header>
-          <h1>Abukar Abdulle</h1>
+          <h1>Abukar Abdullahi Abukar</h1>
           <p className="tagline">
             Hey, I'm Abukar. I'm a Full Stack Developer passionate about building
             innovative web applications.
@@ -41,10 +42,10 @@ const ProfilePage: React.FC = () => {
           an open-source enthusiast and continual learner.
         </p>
         <div className="cta-buttons">
-          <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/abukarshegow/" target="_blank" rel="noopener noreferrer">
             Follow Me on Linkedin
           </a>
-          <a href="#subscribe">Check My Latest Projects</a>
+          <a href="https://github.com/Abukarabukar" target="_blank" rel="noopener noreferrer">Check My Latest Projects</a>
         </div>
       </div>
     </div>
