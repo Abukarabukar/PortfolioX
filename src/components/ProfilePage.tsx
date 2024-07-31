@@ -19,11 +19,11 @@ const ProfilePage: React.FC = () => {
       </div>
       <div className="main-content">
         <header>
-          <h1>Abukar Abdullahi Abukar</h1>
+          <h1 className="myName">Abukar Abdullahi Abukar</h1>
           <p className="tagline">
-            Hey, I'm Abukar. I'm a Full Stack Developer passionate about building
-            innovative web applications.
+            Hey, I'm Abukar. I'm a Full Stack Developer passionate about building innovative web and mobile applications.
           </p>
+
         </header>
         <div className="profile-stats">
           <div className="profile-image">
@@ -37,10 +37,9 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
         <p className="bio">
-          I'm a Full Stack Developer with expertise in React, Node.js, and Java. I'm
-          passionate about creating efficient and scalable web applications. I'm also
-          an open-source enthusiast and continual learner.
-        </p>
+  With expertise in React, Node.js, and Java, I'm passionate about creating efficient and scalable web and mobile applications. Additionally, I have a strong interest in cybersecurity and am committed to learning and applying best practices to build secure and resilient applications.
+</p>
+
         <div className="cta-buttons">
           <a href="https://www.linkedin.com/in/abukarshegow/" target="_blank" rel="noopener noreferrer">
             Follow Me on Linkedin

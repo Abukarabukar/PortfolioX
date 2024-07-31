@@ -47,7 +47,7 @@ $accent-color: #005a5a;
     padding: 2rem;
 
     header {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
 
       h1 {
         font-size: 2.5rem;
@@ -58,6 +58,9 @@ $accent-color: #005a5a;
       .tagline {
         font-size: 1.2rem;
         color: darken($text-color, 20%);
+      }
+      .myName {
+        margin-top: -1rem;
       }
     }
 
