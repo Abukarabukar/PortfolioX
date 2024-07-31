@@ -1,0 +1,278 @@
+[33mcommit 19e6fa2d3078daee55e6d88c4971ed22c2497f28[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mlightning-fix-branch[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Tue Jul 30 12:13:42 2024 -0400
+
+    Lightning hit 500 milliseconds or stay if i click longer and fix background sound
+
+[33mcommit 49af4870f7ecf19cd574aa2263fc127e04e0a99b[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Tue Jul 30 11:56:26 2024 -0400
+
+    Lightning hit 500 milliseconds or stay if i click longer
+
+[33mcommit 736ecb3b2f7b96c2a88b7b435a8ee7e20f9d5a0f[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Tue Jul 30 11:46:44 2024 -0400
+
+    Lightning hit 500 milliseconds
+
+[33mcommit f17db3e78221dd60f4d7741632d4c59a444aba1a[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Tue Jul 30 11:32:11 2024 -0400
+
+    Lightning from myPhoto to x and y axis
+
+[33mcommit 5bddb6e677c030dd6291edf4f62e53440e70ec77[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Tue Jul 30 10:38:07 2024 -0400
+
+    fix the error in the landing page and removed the lightining
+
+[33mcommit d902acdfcd2a1974c9ed791b1d1d2bc286818644[m[33m ([m[1;31mheroku/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 29 22:03:23 2024 -0400
+
+    Update landing page with water wave effect and new styling
+
+[33mcommit 37f0bae6d0d1042c068f31068b3b45e66311fd06[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 22:26:09 2024 -0400
+
+    change the landing page to 3 monkeys
+
+[33mcommit 50d74f3f70469a07ceb3b75d32baadbd89e80a1b[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 22:20:46 2024 -0400
+
+    change the landing page to 3 monkeys
+
+[33mcommit cdf85eaf9849a7029710af9ecb326407a799177f[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 21:03:57 2024 -0400
+
+    finish the landing page
+
+[33mcommit aa04460ed26f84a3817efa1d5a021c30144cef18[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 20:25:50 2024 -0400
+
+    I added the landing page with video background
+
+[33mcommit 7664797ec633fbb1321e4d97021a28322aa23f56[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 19:51:18 2024 -0400
+
+    I added the landing page with video background
+
+[33mcommit a9514ecbd23ed2d2b2b7bf0095ee6eb9b1d62df3[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 19:41:58 2024 -0400
+
+    I added the landing page
+
+[33mcommit 86ddd765c9120fae57ccf9502c068e75af15380e[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 00:12:55 2024 -0400
+
+    the gif for x is not moving until i play
+
+[33mcommit b520f6a7a1dbe9efb2ed940dce39f3fa8eeefa03[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 28 00:03:49 2024 -0400
+
+    add my photo and change the x photo
+
+[33mcommit de3a43556f265ce7e703656956f940526886438b[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sat Jul 27 20:32:25 2024 -0400
+
+    add gif if the player lose and sound
+
+[33mcommit 184f96e348d621c977a5750e00ec0423d5d09c8d[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sat Jul 27 20:02:30 2024 -0400
+
+    the game works perfectly just need to reduce the amount of time to wait for o to play
+
+[33mcommit 4f9391cfb1442aed32a282f03143ca3efcd35424[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 22 23:12:18 2024 -0400
+
+    the game works perfectly just need to reduce the amount of time to wait for o to play
+
+[33mcommit 42241187dfc7c5253dbc38f42d739b40e2efce03[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 22 21:41:53 2024 -0400
+
+    the x works well the computor also works
+
+[33mcommit 636462b845c139641962bbdb6ee67c8a2dcef331[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 22 20:53:56 2024 -0400
+
+    the x goes to the right place
+
+[33mcommit 2c1f9f353158c3e4ee70f3540d9ebea8b6d5cdd2[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 22 20:40:41 2024 -0400
+
+    seprate x into hidden x and Abukar x
+
+[33mcommit c8cc01d3e5b6f0fe89fa96694c4f9f0b1d957f6a[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 21 10:44:24 2024 -0400
+
+    made each box as it's components
+
+[33mcommit 7ea4868a80523339c2db1617329415fbacc55bd0[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 21 09:55:40 2024 -0400
+
+    removed unnecessary code and O pieces
+
+[33mcommit 058d2e83315b29bd5a213b2f144984e2482553b9[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sat Jul 20 07:46:24 2024 -0400
+
+    now I can put the animated x to the box
+
+[33mcommit 765a9b1d68c8eb43d52adcb14c3274ddf6a24c04[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 21:11:07 2024 -0400
+
+    Save changes before checking out to a specific commit
+
+[33mcommit 0ea1a17926a3424ef9d8580637054ead2e347874[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 20:01:25 2024 -0400
+
+    update x / o
+
+[33mcommit d9ecc83617a4a796d9a16996e411c271a9570132[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 19:40:32 2024 -0400
+
+    update x / o
+
+[33mcommit e0a3f1dec94f6b8fe27a7921887d26cf939a0073[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 19:25:35 2024 -0400
+
+    update x / o
+
+[33mcommit d0a03c9845f60abb0667193245d7590d65869c3c[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 19:14:18 2024 -0400
+
+    update x / o
+
+[33mcommit c2f75be80a543b8fc9734a7e58e91c4e662a416b[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 19:06:03 2024 -0400
+
+    update x / o
+
+[33mcommit 848c8f9105f2a03d1204dc1acb142a10a092b424[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 18:55:14 2024 -0400
+
+    fixing x / o
+
+[33mcommit 759135255db5354c1ee81434e00e32b3b3ec3e1d[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 14:45:51 2024 -0400
+
+    fixing x / o
+
+[33mcommit 56434c04fad8f119348950550052d6d0f538f622[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 13:32:36 2024 -0400
+
+    fixing temp
+
+[33mcommit 5836ff904d583b25907923cf0c5afd44b1e7e7d5[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 11:21:18 2024 -0400
+
+    build the game X/O
+
+[33mcommit 93a80afbd858d4f48d31bd4153c80dcf7754a7ef[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Fri Jul 19 07:21:23 2024 -0400
+
+    build the game X/O
+
+[33mcommit 7217971b197555840426a3c938d31ba219cc80dd[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Wed Jul 17 22:21:22 2024 -0400
+
+    fix the pointer
+
+[33mcommit df73e59a60b0555895d6822830149502d4e6900d[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Wed Jul 17 22:16:08 2024 -0400
+
+    fix the pointer
+
+[33mcommit 22f106f544380a09d2699eccabb35fe7930c59c1[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Wed Jul 17 14:26:44 2024 -0400
+
+    add pointer
+
+[33mcommit ece300d85e6660d68829e58e1ee3d576fb4563dc[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Wed Jul 17 14:17:25 2024 -0400
+
+    add pointer
+
+[33mcommit 92c78723d7d6291e64d80251ceae61d98417a002[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 15 13:29:58 2024 -0400
+
+    update the tik tak toe
+
+[33mcommit b32498a02674abbd5a726e06e9b7ecbb82503700[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 15 13:28:28 2024 -0400
+
+    update the tik tak toe
+
+[33mcommit ce60341c2d72373d9df05855e65c63bcf0c4240d[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 15 13:23:25 2024 -0400
+
+    update the tik tak toe
+
+[33mcommit 36466cbc69b2cca1788b91664642c48c05ded509[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Mon Jul 15 13:03:37 2024 -0400
+
+    add tik tak toe game
+
+[33mcommit 0358ce39b57ca14dd3b2727a6eff6b0b9e220e8b[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Sun Jul 14 10:49:50 2024 -0400
+
+    Fix the back end
+
+[33mcommit 28cb97b487384f1936a87d28ef2e285c3e720926[m
+Merge: d2249b2 c8735bf
+Author: Abukar Abukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Thu Jul 11 19:35:40 2024 -0400
+
+    Merge pull request #1 from Abukarabukar/abukar
+    
+    First push for both backend and frontend
+
+[33mcommit c8735bf50b028c1a0421a9072ccfbac735d6e4f0[m[33m ([m[1;31morigin/abukar[m[33m)[m
+Author: Abukarabukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Thu Jul 11 19:33:46 2024 -0400
+
+    First push for both backend and frontend
+
+[33mcommit d2249b284568403d3e1e20f1161710f0824c2210[m
+Author: Abukar Abukar <159937083+Abukarabukar@users.noreply.github.com>
+Date:   Thu Jul 11 18:57:48 2024 -0400
+
+    Initial commit

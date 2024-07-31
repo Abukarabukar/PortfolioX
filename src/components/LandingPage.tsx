@@ -110,18 +110,19 @@ const LandingPage: React.FC = () => {
     canvas.height = window.innerHeight;
 
     const lt = new Lightning({
-      Segments: 50,
-      Threshold: 1,
-      Width: 8,
-      Color: '#00FFFF',
-      Blur: 20,
-      BlurColor: '#00FFFF',
-      Alpha: 1,
-      GlowColor: '#0000FF',
-      GlowWidth: 200,
-      GlowBlur: 300,
-      GlowAlpha: 0.7,
-    });
+  Segments: 100,  // More segments for detail
+  Threshold: 0.7,  // More natural branching
+  Width: 2,  // Thinner core
+  Color: '#FFFFFF',  // White color for lightning
+  Blur: 10,  // Slight blur for softness
+  BlurColor: '#FFFFFF',  // Matching blur color
+  Alpha: 1,  // Full visibility
+  GlowColor: '#ADD8E6',  // Light blue glow
+  GlowWidth: 100,  // Moderate glow width
+  GlowBlur: 50,  // Moderate blur for glow
+  GlowAlpha: 0.5,  // Slightly transparent glow
+});
+
 
     const renderLightning = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
