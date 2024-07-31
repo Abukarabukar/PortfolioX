@@ -29,9 +29,10 @@ const ProfilePage: React.FC = () => {
             <img src={myPhoto} alt="Abukar Abdulle" />
           </div>
           <div className="stats">
-            <div><span className="icon">🐦</span> 6,549 tweets all time</div>
-            <div><span className="icon">⭐</span> 4,767 stars on this repo</div>
-            <div><span className="icon">📈</span> 1,547,989 blog views all time</div>
+          <div><span className="icon">🏅</span> Alpha Sigma Lambda Honor Society Member</div>
+          <div><span className="icon">🎓</span> Dean's Honor Roll</div>
+          <div><span className="icon">📈</span> 3.80 GPA at Creighton University</div>
+          <div><span className="icon">📚</span> 3.98 GPA at Regis University</div>
           </div>
         </div>
         <p className="bio">
@@ -41,9 +42,9 @@ const ProfilePage: React.FC = () => {
         </p>
         <div className="cta-buttons">
           <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
-            follow me on twitter
+            Follow Me on Linkedin
           </a>
-          <a href="#subscribe">get email updates</a>
+          <a href="#subscribe">Check My Latest Projects</a>
         </div>
       </div>
     </div>
