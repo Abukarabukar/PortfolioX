@@ -1,213 +1,167 @@
+// Theme colors
 $primary-cyan: #00ffff;
 $dark-background: #0a0e14;
 $text-color: #e0e0e0;
 $accent-color: #005a5a;
 
-.landing-page {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+.profile-page {
+  display: flex;
+  background-color: $dark-background;
   color: $text-color;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
 
-  .video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba($dark-background, 0.7);
-    z-index: 1;
-  }
-
-  .background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  }
-
-  .content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
+  .sidebar {
+    width: 200px;
     padding: 2rem;
-  }
+    background-color: darken($dark-background, 5%);
 
-  .photo-container {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    box-shadow: 0 0 30px rgba($primary-cyan, 0.5);
-    border: 3px solid $primary-cyan;
-  }
-
-  .profile-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .quote {
-    font-size: 2.5rem;
-    font-style: italic;
-    color: $primary-cyan;
-    margin-bottom: 3rem;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .static-text {
-      margin-right: 0.75rem;
-    }
-
-    .flip-words {
-      color: $primary-cyan;
+    .logo {
+      font-size: 2rem;
       font-weight: bold;
-      text-shadow: 0 0 15px rgba($primary-cyan, 0.6);
+      margin-bottom: 2rem;
+      color: $primary-cyan;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+
+      a {
+        color: $text-color;
+        text-decoration: none;
+        margin-bottom: 2.6rem;
+        font-size: 1.8rem;
+        transition: color 0.3s;
+
+        &:hover {
+          color: $primary-cyan;
+        }
+      }
     }
   }
 
-  .icon-container {
-    display: flex;
-    justify-content: center;
-    gap: 8rem;
-    margin-top: 4rem;
-  }
+  .main-content {
+    flex: 1;
+    padding: 2rem;
 
-  .icon-wrapper {
-    position: relative;
-    display: inline-block;
-  }
+    header {
+      margin-bottom: 2rem;
 
-  .icon {
-    width: 120px;
-    height: 120px;
-    cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    filter: invert(1) hue-rotate(180deg);
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        color: $primary-cyan;
+      }
+
+      .tagline {
+        font-size: 1.2rem;
+        color: darken($text-color, 20%);
+      }
+    }
+
+    .profile-stats {
+      display: flex;
+      align-items: center;
+      background-color: rgba($dark-background, 0.7);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+
+      .profile-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 1.5rem;
+        border: 3px solid $primary-cyan;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .stats {
+        flex-grow: 1;
+
+        div {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.5rem;
+          font-size: 0.9rem;
+          color: $text-color;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .icon {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+
+    .bio {
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      background-color: rgba($accent-color, 0.1);
+      padding: 1rem;
+      border-radius: 4px;
+    }
+
+    .cta-buttons {
+      a {
+        display: inline-block;
+        margin-right: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: $accent-color;
+        color: $text-color;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+          background-color: $primary-cyan;
+          color: $dark-background;
+        }
+      }
+    }
+  }
+}
+
+// Add some subtle hover effects
+.profile-page {
+  .profile-stats,
+  .bio,
+  .cta-buttons a {
+    transition: transform 0.3s, box-shadow 0.3s;
 
     &:hover {
-      transform: scale(1.15);
-      filter: invert(1) hue-rotate(180deg) drop-shadow(0 0 8px $primary-cyan);
-    }
-  }
-
-  .tooltip {
-    visibility: hidden;
-    width: 160px;
-    background-color: $accent-color;
-    color: $text-color;
-    text-align: center;
-    border-radius: 8px;
-    padding: 10px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 135%;
-    left: 50%;
-    margin-left: -80px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 16px;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -6px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: $accent-color transparent transparent transparent;
-    }
-  }
-
-  .icon-wrapper:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
-// Ensure the WaterWave component covers the entire viewport
-div[style*="position: relative; width: 100%; height: 100vh;"] {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-}
-
-@media (max-width: 1024px) {
-  .landing-page {
-    .photo-container {
-      width: 250px;
-      height: 250px;
-    }
-
-    .quote {
-      font-size: 2rem;
-    }
-
-    .icon-container {
-      gap: 6rem;
-    }
-
-    .icon {
-      width: 100px;
-      height: 100px;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba($primary-cyan, 0.2);
     }
   }
 }
 
-@media (max-width: 768px) {
-  .landing-page {
-    .photo-container {
-      width: 200px;
-      height: 200px;
-    }
-
-    .quote {
-      font-size: 1.8rem;
-    }
-
-    .icon-container {
-      gap: 4rem;
-    }
-    
-    .icon {
-      width: 80px;
-      height: 80px;
-    }
-  }
+// Add a scrollbar style that matches the theme
+::-webkit-scrollbar {
+  width: 12px;
 }
 
-@media (max-width: 480px) {
-  .landing-page {
-    .photo-container {
-      width: 150px;
-      height: 150px;
-    }
+::-webkit-scrollbar-track {
+  background: $dark-background;
+}
 
-    .quote {
-      font-size: 1.5rem;
-    }
+::-webkit-scrollbar-thumb {
+  background-color: $accent-color;
+  border-radius: 6px;
+  border: 3px solid $dark-background;
+}
 
-    .icon-container {
-      gap: 2rem;
-    }
-    
-    .icon {
-      width: 60px;
-      height: 60px;
-    }
-  }
+::-webkit-scrollbar-thumb:hover {
+  background-color: $primary-cyan;
 }
